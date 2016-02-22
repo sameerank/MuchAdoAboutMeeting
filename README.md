@@ -6,7 +6,7 @@
 
 ## Minimum Viable Product
 
-MuchAdoAboutMeeting is a web application inspired by meetup.com built using Ruby on Rails
+MuchAdoAboutMeeting is a web application inspired by Meetup (meetup.com) built using Ruby on Rails
 and React.js. MuchAdoAboutMeeting allows users to:
 
 <!-- This is a Markdown checklist. Use it to keep track of your
@@ -48,7 +48,7 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 - [ ] make their data accessible through jBuilder views
 - [ ] seed the database with test data
 
-### Phase 2: Setup APIUtil (0.5 days)
+### Phase 2: Setup APIUtil (1 day)
 
 **Objective:** User profile can be created, read, edited and destroyed through
 the API.
@@ -73,7 +73,7 @@ user interface.
 
 ### Phase 4: Start Styling (0.5 days)
 
-**Objective:** Existing pages (including singup/signin) will look good.
+**Objective:** Existing pages (including signup/signin) will look good.
 
 - [ ] create a basic style guide
 - [ ] position elements on the page
@@ -93,34 +93,32 @@ user interface.
 Phase 3 adds organization to the Events. Events belong to a Group,
 which has its own `Index` view.
 
-### Phase 6: Tags (1.5 days)
+### Phase 6: Tags (2 days)
 
 **Objective:** Events can be tagged with multiple tags, and tags are searchable.
 
 - [ ] create `Tag` model and join table
 - build out API, Flux loop, and components for:
-  - [ ] fetching tags for group
-  - [ ] adding tags to group
-  - [ ] creating tags while adding to group
-  - [ ] searching groups by tag
+- [ ] fetching tags for group
+- [ ] adding tags to group
+- [ ] creating tags while adding to group
+- [ ] searching groups by tag
 - [ ] Style new elements
+- [ ] Enable notification icons in nav bar
 
-### Phase 7: Allow Complex Styling (0.5 days)
+### Phase 7: Styling Cleanup and Seeding (2 days)
 
-**objective:** Enable complex styling.
+**objective:** Clean up styling and seed app with fun/interesting data.
 
-- [ ] Integrate `react-quill` (based on Quill.js).
 - [ ] Use Rails helpers to sanitize HTML before rendering.
-- [ ] Style the new Quill elements.
-
-### Phase 8: Styling Cleanup and Seeding (1 day)
-
-**objective:** Make the site feel more cohesive and awesome.
-
 - [ ] Refactor HTML classes & CSS rules
 - [ ] Add modals, transitions, and other styling flourishes.
 
 ### Bonus Features (TBD)
+- [ ] Use geolocation and add Google maps view of upcoming event locations
+- [ ] Show a user summary on hover over user profile picture or name
+- [ ] Enable chatting between members
+
 
 
 [phase-one]: ./docs/phases/phase1.md
