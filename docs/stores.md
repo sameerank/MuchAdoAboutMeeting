@@ -1,49 +1,49 @@
 # Flux Stores
 
-### NoteStore
+### EventStore
 
 Holds all persisted note data.
 
 ##### Actions:
-- `receiveAllNotes`
-- `receiveSingleNote`
-- `removeNote`
+- `receiveAllEvents`
+- `receiveSingleEvent`
+- `removeEvent`
 
 ##### Listeners:
-- `NotesIndex` (passes to `NoteIndexItem` via props)
-- `NoteDetail`
+- `EventsIndex` (passes to `EventIndexItem` via props)
+- `EventDetail`
 
-### NoteFormStore
+### EventFormStore
 
-Holds un-persisted note data to send to the API.
+Holds un-persisted event data to send to the API.
 
 ##### Actions:
-- `receiveNoteFormParams`
+- `receiveEventFormParams`
 
 ##### Listeners:
-- `NoteForm`
+- `EventForm`
 
-### NotebookStore
+### GroupStore
 
-Holds all persisted notebook data.
+Holds all persisted group data.
 
 ##### Actions:
-- `receiveAllNotebooks`
-- `receiveSingleNotebook`
-- `removeNotebook`
+- `receiveAllGroups`
+- `receiveSingleGroup`
+- `removeGroup`
 
 ##### Listeners:
-- `NotebookIndex`
+- `GroupIndex`
 
-### NotebookFormStore
+### GroupFormStore
 
-Holds un-persisted notebook data to send to the API.
+Holds un-persisted group data to send to the API.
 
 ##### Actions:
-- `receiveNotebookFormParams`
+- `receiveGroupFormParams`
 
 ##### Listeners:
-- `NotebookForm`
+- `GroupForm`
 
 ### SearchStore
 
