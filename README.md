@@ -18,7 +18,7 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 - [ ] Browse, join, leave, or create groups
 - [ ] Search, browse, join, leave, or create events within groups
 - [ ] View the profiles of other members and see their group memberships
-- [ ] Post comments on event pages
+
 
 ## Design Docs
 * [View Wireframes][views]
@@ -46,7 +46,7 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 - [ ] blank landing page after sign-in
 - [ ] make CRUD API for Events
 - [ ] make their data accessible through jBuilder views
-- [ ] seed the database with test data
+  [ ] apply CSS to format fonts and positioning
 
 ### Phase 2: Setup APIUtil (1 day)
 
@@ -56,6 +56,7 @@ the API.
 - [ ] setup Webpack & Flux scaffold
 - [ ] setup `APIUtil` to interact with the API
 - [ ] test out API interaction in the console.
+- [ ] re-position elements
 
 ### Phase 3: Flux Architecture and Router (1.5 days)
 
@@ -70,14 +71,17 @@ user interface.
   - [ ] `EventForm`
 - [ ] save Events to the DB when the form loses focus or is left idle
   after editing.
+- [ ] position elements
 
 ### Phase 4: Start Styling (0.5 days)
 
 **Objective:** Existing pages (including signup/signin) will look good.
 
 - [ ] create a basic style guide
+- [ ] seed the database with test data
 - [ ] position elements on the page
 - [ ] add basic colors & styles
+- [ ] check and fix position of elements
 
 ### Phase 5: Groups (1 day)
 
@@ -88,7 +92,8 @@ user interface.
   - [ ] Group CRUD
   - [ ] adding events requires a group
   - [ ] viewing events by group
-- Use CSS to style new views
+- [ ] Use CSS to style new views
+- [ ] Check and fix position of elements
 
 Phase 3 adds organization to the Events. Events belong to a Group,
 which has its own `Index` view.
@@ -104,7 +109,7 @@ which has its own `Index` view.
 - [ ] creating tags while adding to group
 - [ ] searching groups by tag
 - [ ] Style new elements
-- [ ] Enable notification icons in nav bar
+- [ ] Enable notification icons in nav bar (user Pusher)
 
 ### Phase 7: Styling Cleanup and Seeding (2 days)
 
@@ -118,6 +123,7 @@ which has its own `Index` view.
 - [ ] Use geolocation and add Google maps view of upcoming event locations
 - [ ] Show a user summary on hover over user profile picture or name
 - [ ] Enable chatting between members
+- [ ] Post comments on event pages
 
 
 

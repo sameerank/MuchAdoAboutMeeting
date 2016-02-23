@@ -13,7 +13,8 @@ email           | string    | not null
 location        | string    | not null
 bio             | text      | not null
 avatar_url      | string    | not null
-member_since    | datetime  | not null
+created_at      | datetime  | not null
+updated_at      | datetime  | not null
 
 ## groups
 column name | data type | details
