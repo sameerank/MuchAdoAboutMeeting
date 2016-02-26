@@ -9,7 +9,7 @@
 
 ### Controllers
 * UsersController (create, new)
-* SessionsController (create, new, destroy)
+* SessionController (create, new, destroy)
 * Api::GroupController (create, destroy, index, show, update)
 * Api::EventController (create, destroy, index, show, update)
 * Api::CommentController (create, destroy, index, show, update)

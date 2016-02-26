@@ -7,8 +7,7 @@ id              | integer   | not null, primary key
 username        | string    | not null, indexed, unique
 password_digest | string    | not null
 session_token   | string    | not null, indexed, unique
-first_name      | string    | not null
-last_name       | string    | not null
+name            | string    | not null
 email           | string    | not null
 location        | string    | not null
 bio             | text      | not null
@@ -20,17 +19,23 @@ updated_at      | datetime  | not null
 column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
-organizer_id| integer   | not null, foreign key (references users), indexed
 title       | string    | not null
 description | text      | not null
+location    | string    | not null
+banner_url  | string    |
+organizer_id| integer   | not null, foreign key (references users), indexed
+
 
 ## events
 column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
 title       | string    | not null
-body        | text      | not null
-organizer_id| integer   | not null, foreign key (references users), indexed
+description | text      | not null
+start_time  | datetime  | not null
+end_time    | datetime  |
+location    | string    | string
+host_id     | integer   | not null, foreign key (references users), indexed
 group_id    | integer   | not null, foreign key (references group), indexed
 
 ## tags
