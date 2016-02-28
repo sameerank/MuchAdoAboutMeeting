@@ -1,8 +1,8 @@
 var React = require('react');
 var EventStore = require('../stores/event');
 var ApiUtil = require('../util/api_util');
-var UsersIndex = require('./usersIndex');
-var UserIndexItem = require('./userIndexItem')
+var UserIndexItem = require('./userIndexItem');
+var GroupHeader = require('./groupHeader');
 
 
 var EventDetail = React.createClass({
@@ -39,6 +39,7 @@ var EventDetail = React.createClass({
     return (
       <div>
         <div className="event-detail">
+          <GroupHeader group={this.state.event.group} />
           <div className="detail">
             {['title', 'description', 'start_time', 'end_time', 'location'].map(function (attr) {
               return <p key={attr}>{attr}: {this.state.event[attr]}</p>;

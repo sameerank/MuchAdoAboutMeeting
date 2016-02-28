@@ -1,26 +1,26 @@
 var React = require('react');
 var History = require('react-router').History;
 
-var EventIndexItem = React.createClass({
+var GroupIndexItem = React.createClass({
   mixins: [History],
 
   showDetail: function () {
-    this.history.pushState(null, '/event/' + this.props.event.id, {});
+    this.history.pushState(null, '/group/' + this.props.group.id, {});
   },
 
   render: function () {
     return (
       <div onClick={this.showDetail} className="col-sm-4">
         <img src={this.props.group.banner_url}
-          alt="Event icon is missing"
-          className="event_icon" />
+          alt="Group icon is missing"
+          className="group_icon" />
         <div className="thumbnail-content">
-          <h3>{this.props.event.title}</h3>
-          <p>{this.props.event.description}</p>
+          <h3>{this.props.group.title}</h3>
+          <p>{this.props.group.description}</p>
         </div>
       </div>
     );
   }
 });
 
-module.exports = EventIndexItem;
+module.exports = GroupIndexItem;

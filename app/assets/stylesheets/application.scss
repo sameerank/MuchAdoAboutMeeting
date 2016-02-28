@@ -39,6 +39,11 @@ header .header-content {
   color: white;
 }
 
+.clickable{
+  cursor: pointer;
+  cursor: hand;
+}
+
 .center_div{
     margin: 0 auto;
     width: 172px;
@@ -57,13 +62,23 @@ header .header-content {
 }
 
 .thumbnail-content {
-    bottom:10px;
-    left:10px;
-    position: absolute;
-    color: white;
-    font-family: 'Lobster', serif;
+  height: 150px;
+  width: 300px;
+  bottom:-60px;
+  left:10px;
+  position: relative;
+  color: white;
+  font-family: 'Lobster', serif;
 }
 
 .event-index {
   padding-top: 20px;
+}
+
+.group_icon {
+  position: absolute;
+  left: -250px;
+  top: 0px;
+  z-index: -1;
+  clip-path: inset(25px 250px 25px 250px);
 }

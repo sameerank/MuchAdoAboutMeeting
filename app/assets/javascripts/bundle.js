@@ -54,15 +54,18 @@
 	var App = __webpack_require__(208);
 	
 	var UsersIndex = __webpack_require__(210);
-	var UserDetail = __webpack_require__(237);
-	var EventsIndex = __webpack_require__(238);
-	var EventDetail = __webpack_require__(242);
+	var UserDetail = __webpack_require__(238);
+	var EventsIndex = __webpack_require__(239);
+	var EventDetail = __webpack_require__(243);
+	var GroupIndex = __webpack_require__(250);
+	var GroupDetail = __webpack_require__(246);
 	
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
-	  React.createElement(IndexRoute, { component: EventsIndex }),
+	  React.createElement(IndexRoute, { component: GroupIndex }),
 	  React.createElement(Route, { path: 'event/:eventId', component: EventDetail }),
+	  React.createElement(Route, { path: 'group/:groupId', component: GroupDetail }),
 	  React.createElement(Route, { path: 'user/:userId', component: UserDetail })
 	);
 	
@@ -31392,6 +31395,33 @@
 	    $.ajax(options);
 	  },
 	
+	  fetchGroups: function () {
+	    var options = {
+	      url: "api/groups",
+	      type: "GET",
+	      success: function (resp) {
+	        ApiActions.receiveAllGroups(resp);
+	      },
+	      error: function (resp) {
+	        console.log(resp);
+	      }
+	    };
+	    $.ajax(options);
+	  },
+	
+	  fetchGroup: function (id) {
+	    var options = {
+	      url: "api/groups/" + id,
+	      success: function (resp) {
+	        ApiActions.receiveSingleGroup(resp);
+	      },
+	      error: function (resp) {
+	        console.log(resp);
+	      }
+	    };
+	    $.ajax(options);
+	  },
+	
 	  logout: function () {
 	    $.ajax({
 	      url: "session",
@@ -31415,6 +31445,7 @@
 	var AppDispatcher = __webpack_require__(230);
 	var UserConstants = __webpack_require__(235);
 	var EventConstants = __webpack_require__(236);
+	var GroupConstants = __webpack_require__(237);
 	
 	var ApiActions = {
 	  receiveAllUsers: function (users) {
@@ -31442,6 +31473,20 @@
 	    AppDispatcher.dispatch({
 	      actionType: EventConstants.EVENT_RECEIVED,
 	      event: event
+	    });
+	  },
+	
+	  receiveAllGroups: function (groups) {
+	    AppDispatcher.dispatch({
+	      actionType: GroupConstants.GROUPS_RECEIVED,
+	      groups: groups
+	    });
+	  },
+	
+	  receiveSingleGroup: function (group) {
+	    AppDispatcher.dispatch({
+	      actionType: GroupConstants.GROUP_RECEIVED,
+	      group: group
 	    });
 	  }
 	};
@@ -31472,12 +31517,24 @@
 
 /***/ },
 /* 237 */
+/***/ function(module, exports) {
+
+	GroupConstants = {
+	  GROUPS_RECEIVED: "GROUPS_RECEIVED",
+	  GROUP_RECEIVED: "GROUP_RECEIVED"
+	};
+	
+	module.exports = GroupConstants;
+
+/***/ },
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var UserStore = __webpack_require__(211);
 	var ApiUtil = __webpack_require__(233);
-	var eventsIndex = __webpack_require__(238);
+	var eventsIndex = __webpack_require__(239);
+	var EventIndexItem = __webpack_require__(241);
 	
 	var UserDetail = React.createClass({
 	  displayName: 'UserDetail',
@@ -31532,6 +31589,19 @@
 	              this.state.user[attr]
 	            );
 	          }.bind(this))
+	        ),
+	        React.createElement(
+	          'div',
+	          null,
+	          React.createElement(
+	            'h2',
+	            null,
+	            'Events: '
+	          ),
+	          this.state.user.events.map(function (event) {
+	            return React.createElement(EventIndexItem, { key: event.id, event: event,
+	              group: event.group });
+	          })
 	        )
 	      )
 	    );
@@ -31542,14 +31612,14 @@
 	module.exports = UserDetail;
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var EventStore = __webpack_require__(239);
+	var EventStore = __webpack_require__(240);
 	var ApiUtil = __webpack_require__(233);
-	var EventIndexItem = __webpack_require__(240);
-	var EventsHeader = __webpack_require__(241);
+	var EventIndexItem = __webpack_require__(241);
+	var EventsHeader = __webpack_require__(242);
 	
 	var EventIndex = React.createClass({
 	  displayName: 'EventIndex',
@@ -31587,7 +31657,8 @@
 	          'div',
 	          { className: 'row no-gutters' },
 	          this.state.events.map(function (event) {
-	            return React.createElement(EventIndexItem, { key: event.id, event: event });
+	            return React.createElement(EventIndexItem, { key: event.id, event: event,
+	              group: event.group });
 	          })
 	        )
 	      )
@@ -31598,7 +31669,7 @@
 	module.exports = EventIndex;
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(212).Store;
@@ -31645,7 +31716,7 @@
 	module.exports = EventStore;
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -31664,23 +31735,21 @@
 	    return React.createElement(
 	      'div',
 	      { onClick: this.showDetail, className: 'col-sm-4' },
+	      React.createElement('img', { src: this.props.group.banner_url,
+	        alt: 'Event icon is missing',
+	        className: 'event_icon' }),
 	      React.createElement(
 	        'div',
-	        null,
-	        React.createElement('img', { src: 'http://res.cloudinary.com/deh4rnozs/image/upload/w_300,h_150,c_fill,r_10/sample.png', alt: 'Event icon is missing' }),
+	        { className: 'thumbnail-content' },
 	        React.createElement(
-	          'div',
-	          { className: 'thumbnail-content' },
-	          React.createElement(
-	            'h3',
-	            null,
-	            this.props.event.title
-	          ),
-	          React.createElement(
-	            'p',
-	            null,
-	            this.props.event.description
-	          )
+	          'h3',
+	          null,
+	          this.props.event.title
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          this.props.event.description
 	        )
 	      )
 	    );
@@ -31690,7 +31759,7 @@
 	module.exports = EventIndexItem;
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -31710,15 +31779,20 @@
 	        React.createElement(
 	          "h3",
 	          null,
-	          "blah blah blah",
+	          "Nor stony tower, nor walls of beaten brass,",
 	          React.createElement("br", null),
-	          "blah blah blah. "
+	          "Nor airless dungeon, nor strong links of iron,",
+	          React.createElement("br", null),
+	          "Can be retentive to the strength of spirit; ",
+	          React.createElement("br", null),
+	          React.createElement("br", null),
+	          "If thou wishest to demo without an account"
 	        ),
 	        React.createElement("br", null),
 	        React.createElement(
 	          "button",
 	          { type: "submit", className: "btn-lg btn-default navbar-btn" },
-	          "Take me to the demo"
+	          "Clicketh to enter"
 	        )
 	      )
 	    );
@@ -31728,14 +31802,14 @@
 	module.exports = EventsHeader;
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var EventStore = __webpack_require__(239);
+	var EventStore = __webpack_require__(240);
 	var ApiUtil = __webpack_require__(233);
-	var UsersIndex = __webpack_require__(210);
-	var UserIndexItem = __webpack_require__(243);
+	var UserIndexItem = __webpack_require__(244);
+	var GroupHeader = __webpack_require__(245);
 	
 	var EventDetail = React.createClass({
 	  displayName: 'EventDetail',
@@ -31780,6 +31854,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'event-detail' },
+	        React.createElement(GroupHeader, { group: this.state.event.group }),
 	        React.createElement(
 	          'div',
 	          { className: 'detail' },
@@ -31810,7 +31885,7 @@
 	module.exports = EventDetail;
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -31831,7 +31906,7 @@
 	      { onClick: this.showDetail, className: 'col-sm-4' },
 	      React.createElement(
 	        'div',
-	        null,
+	        { className: 'clickable' },
 	        React.createElement('img', { src: this.props.user.avatar_url, alt: this.props.user.name }),
 	        React.createElement(
 	          'p',
@@ -31844,6 +31919,287 @@
 	});
 	
 	module.exports = UserIndexItem;
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	
+	var GroupHeader = React.createClass({
+	  displayName: 'GroupHeader',
+	
+	  mixins: [History],
+	
+	  showDetail: function () {
+	    this.history.pushState(null, '/group/' + this.props.group.id, {});
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'header',
+	      { onClick: this.showDetail, className: 'clickable' },
+	      React.createElement('img', { alt: this.props.group.title,
+	        src: this.props.group.banner_url })
+	    );
+	  }
+	});
+	
+	module.exports = GroupHeader;
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var GroupStore = __webpack_require__(247);
+	var ApiUtil = __webpack_require__(233);
+	var UserIndexItem = __webpack_require__(244);
+	var EventIndexItem = __webpack_require__(241);
+	var GroupHeader = __webpack_require__(245);
+	
+	var GroupDetail = React.createClass({
+	  displayName: 'GroupDetail',
+	
+	
+	  getInitialState: function () {
+	    return this.getStateFromStore();
+	  },
+	
+	  getStateFromStore: function () {
+	    return { group: GroupStore.find(parseInt(this.props.params.groupId)) };
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {
+	    ApiUtil.fetchGroup(parseInt(newProps.params.groupId));
+	  },
+	
+	  componentDidMount: function () {
+	    this.groupListener = GroupStore.addListener(this._onChange);
+	    ApiUtil.fetchGroup(parseInt(this.props.params.groupId));
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.groupListener.remove();
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
+	  },
+	
+	  render: function () {
+	    if (this.state.group === undefined) {
+	      return React.createElement('div', null);
+	    }
+	    if (this.state.group.users === undefined) {
+	      return React.createElement('div', null);
+	    }
+	    if (this.state.group.events === undefined) {
+	      return React.createElement('div', null);
+	    }
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'group-detail' },
+	        React.createElement(GroupHeader, { group: this.state.group }),
+	        React.createElement(
+	          'div',
+	          { className: 'detail' },
+	          ['title', 'description', 'location'].map(function (attr) {
+	            return React.createElement(
+	              'p',
+	              { key: attr },
+	              attr,
+	              ': ',
+	              this.state.group[attr]
+	            );
+	          }.bind(this))
+	        ),
+	        React.createElement(
+	          'div',
+	          null,
+	          React.createElement(
+	            'h2',
+	            null,
+	            'Users: '
+	          ),
+	          this.state.group.users.map(function (user) {
+	            return React.createElement(UserIndexItem, { key: user.id, user: user,
+	              group: this.state.group });
+	          }.bind(this))
+	        ),
+	        ' ',
+	        React.createElement('br', null),
+	        React.createElement(
+	          'div',
+	          null,
+	          React.createElement(
+	            'h2',
+	            null,
+	            'Events: '
+	          ),
+	          this.state.group.events.map(function (event) {
+	            return React.createElement(EventIndexItem, { key: event.id, event: event,
+	              group: this.state.group });
+	          }.bind(this))
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = GroupDetail;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(212).Store;
+	var AppDispatcher = __webpack_require__(230);
+	var _groups = {};
+	var GroupStore = new Store(AppDispatcher);
+	
+	GroupStore.all = function () {
+	  var groups = [];
+	  for (var id in _groups) {
+	    groups.push(_groups[id]);
+	  }
+	  return groups;
+	};
+	
+	GroupStore.find = function (id) {
+	  return _groups[id];
+	};
+	
+	var resetGroups = function (groups) {
+	  _groups = {};
+	  groups.forEach(function (group) {
+	    _groups[group.id] = group;
+	  });
+	};
+	
+	var resetGroup = function (group) {
+	  _groups[group.id] = group;
+	};
+	
+	GroupStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case GroupConstants.GROUPS_RECEIVED:
+	      resetGroups(payload.groups);
+	      GroupStore.__emitChange();
+	      break;
+	    case GroupConstants.GROUP_RECEIVED:
+	      resetGroup(payload.group);
+	      GroupStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = GroupStore;
+
+/***/ },
+/* 248 */,
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	
+	var GroupIndexItem = React.createClass({
+	  displayName: 'GroupIndexItem',
+	
+	  mixins: [History],
+	
+	  showDetail: function () {
+	    this.history.pushState(null, '/group/' + this.props.group.id, {});
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { onClick: this.showDetail, className: 'col-sm-4' },
+	      React.createElement('img', { src: this.props.group.banner_url,
+	        alt: 'Group icon is missing',
+	        className: 'group_icon' }),
+	      React.createElement(
+	        'div',
+	        { className: 'thumbnail-content' },
+	        React.createElement(
+	          'h3',
+	          null,
+	          this.props.group.title
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          this.props.group.description
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = GroupIndexItem;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var GroupStore = __webpack_require__(247);
+	var ApiUtil = __webpack_require__(233);
+	var GroupIndexItem = __webpack_require__(249);
+	var EventsHeader = __webpack_require__(242);
+	
+	var GroupIndex = React.createClass({
+	  displayName: 'GroupIndex',
+	
+	  getInitialState: function () {
+	    return {
+	      groups: GroupStore.all()
+	    };
+	  },
+	
+	  componentDidMount: function () {
+	    this.groupListener = GroupStore.addListener(this._onChange);
+	    ApiUtil.fetchGroups();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.groupListener.remove();
+	  },
+	
+	  _onChange: function () {
+	    this.setState({
+	      groups: GroupStore.all()
+	    });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'section',
+	      null,
+	      React.createElement(EventsHeader, null),
+	      React.createElement(
+	        'div',
+	        { className: 'container group-index' },
+	        React.createElement(
+	          'div',
+	          { className: 'row no-gutters' },
+	          this.state.groups.map(function (group) {
+	            return React.createElement(GroupIndexItem, { key: group.id, group: group });
+	          })
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = GroupIndex;
 
 /***/ }
 /******/ ]);

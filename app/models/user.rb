@@ -8,7 +8,6 @@
 #  session_token   :string           not null
 #  name            :string
 #  location        :string
-#  birthday        :date
 #  gender          :string
 #  bio             :text
 #  avatar_url      :string
@@ -20,6 +19,18 @@ class User < ActiveRecord::Base
   validates :email, :password_digest, :session_token, presence: true
   validates :password, length: { minimum: 6, allow_nil: true }
 
+
+  has_many :events_to_host,
+  foreign_key: :host_id,
+  primary_key: :id,
+  class_name: "Event"
+
+  has_many :groups_to_organize,
+  foreign_key: :organizer_id,
+  primary_key: :id,
+  class_name: 'Group'
+
+
   has_many :user_events,
   foreign_key: :user_id,
   primary_key: :id,
@@ -29,10 +40,16 @@ class User < ActiveRecord::Base
   through: :user_events,
   source: :event
 
-  has_many :events_to_host,
-  foreign_key: :host_id,
+
+  has_many :user_groups,
+  foreign_key: :user_id,
   primary_key: :id,
-  class_name: "Event"
+  class_name: 'UserGroup'
+
+  has_many :groups,
+  through: :user_groups,
+  source: :group
+
 
   attr_reader :password
 

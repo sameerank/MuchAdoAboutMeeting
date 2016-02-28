@@ -2,6 +2,7 @@ var React = require('react');
 var UserStore = require('../stores/user');
 var ApiUtil = require('../util/api_util');
 var eventsIndex = require('./eventsIndex');
+var EventIndexItem = require('./eventIndexItem');
 
 var UserDetail = React.createClass({
 
@@ -41,6 +42,14 @@ var UserDetail = React.createClass({
             {['name', 'location', 'gender', 'bio'].map(function (attr) {
               return <p key={attr}>{attr}: {this.state.user[attr]}</p>;
             }.bind(this))}
+          </div>
+
+          <div>
+            <h2>Events: </h2>
+            {this.state.user.events.map(function (event) {
+              return (<EventIndexItem key={event.id} event={event}
+                group={event.group} />);
+            })}
           </div>
 
         </div>

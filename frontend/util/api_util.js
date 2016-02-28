@@ -55,6 +55,33 @@ ApiUtil = {
     $.ajax(options);
   },
 
+  fetchGroups: function () {
+    var options = {
+      url: "api/groups",
+      type: "GET",
+      success: function (resp) {
+        ApiActions.receiveAllGroups(resp);
+      },
+      error: function (resp) {
+        console.log(resp);
+      }
+    };
+    $.ajax(options);
+  },
+
+  fetchGroup: function (id) {
+    var options = {
+      url: "api/groups/" + id,
+      success: function (resp) {
+        ApiActions.receiveSingleGroup(resp);
+      },
+      error: function (resp) {
+        console.log(resp);
+      }
+    };
+    $.ajax(options);
+  },
+
   logout: function () {
     $.ajax({
       url: "session",

@@ -34,7 +34,8 @@ var EventIndex = React.createClass({
           <div className="row no-gutters">
             {
               this.state.events.map(function (event) {
-                return <EventIndexItem key={event.id} event={event} />;
+                return <EventIndexItem key={event.id} event={event}
+                  group={event.group} />;
               })
             }
           </div>

@@ -3,7 +3,6 @@ json.array! @users do |user|
   json.email user.email
   json.name user.name
   json.location user.location
-  json.birthday user.birthday
   json.gender user.gender
   json.bio user.bio
   json.avatar_url user.avatar_url

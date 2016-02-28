@@ -11,12 +11,15 @@ var UsersIndex = require('./components/usersIndex');
 var UserDetail = require('./components/userDetail');
 var EventsIndex = require('./components/eventsIndex');
 var EventDetail = require('./components/eventDetail');
+var GroupIndex = require('./components/groupIndex');
+var GroupDetail = require('./components/groupDetail');
 
 
 var routes = (
   <Route path="/" component={App}>
-    <IndexRoute component={EventsIndex}/>
+    <IndexRoute component={GroupIndex}/>
     <Route path="event/:eventId" component={EventDetail} />
+    <Route path="group/:groupId" component={GroupDetail} />
     <Route path="user/:userId" component={UserDetail} />
   </Route>
 );

@@ -18,18 +18,26 @@ class Event < ActiveRecord::Base
   validates :title, :description, :start_time, :location, :host_id,
   :group_id, presence: true
 
-  has_many :user_events,
-  foreign_key: :event_id,
-  primary_key: :id,
-  class_name: "UserEvent"
 
   belongs_to :host,
   foreign_key: :host_id,
   primary_key: :id,
-  class_name: "User"
+  class_name: 'User'
+
+  belongs_to :group,
+  foreign_key: :group_id,
+  primary_key: :id,
+  class_name: 'Group'
+
+
+  has_many :user_events,
+  foreign_key: :event_id,
+  primary_key: :id,
+  class_name: 'UserEvent'
 
   has_many :users,
   through: :user_events,
   source: :user
+
 
 end

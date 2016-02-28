@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'figaro'
+
 gem 'less-rails-bootstrap', '~> 3.3', '>= 3.3.5.0'
 gem 'therubyracer'
 gem 'bootstrap-sass', '~> 3.2.0'

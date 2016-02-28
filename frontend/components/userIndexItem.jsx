@@ -11,7 +11,7 @@ var UserIndexItem = React.createClass({
   render: function () {
     return (
       <div onClick={this.showDetail} className="col-sm-4">
-        <div>
+        <div className="clickable">
           <img src={this.props.user.avatar_url} alt={this.props.user.name} />
           <p>{this.props.user.name}</p>
         </div>
