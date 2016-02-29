@@ -2,7 +2,6 @@ var React = require('react');
 var EventStore = require('../stores/event');
 var ApiUtil = require('../util/api_util');
 var EventIndexItem = require('./eventIndexItem');
-var EventsHeader = require('./eventsHeader');
 
 var EventIndex = React.createClass({
   getInitialState: function () {
@@ -29,7 +28,6 @@ var EventIndex = React.createClass({
   render: function () {
     return (
       <section>
-        <EventsHeader />
         <div className="container event-index">
           <div className="row no-gutters">
             {

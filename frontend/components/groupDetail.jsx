@@ -39,28 +39,40 @@ var GroupDetail = React.createClass({
 
       return (
         <div>
-          <div className="group-detail">
-            <GroupHeader group={this.state.group} />
-            <div className="detail">
-              {['title', 'description', 'location'].map(function (attr) {
-                return <p key={attr}>{attr}: {this.state.group[attr]}</p>
-              }.bind(this))}
+          <GroupHeader group={this.state.group} />
+          <div className="paper-box">
+            <div>
+              <ul className="nav nav-tabs" role="tablist">
+                <li role="presentation" className="active"><a href="#group-details" aria-controls="group-details" role="tab" data-toggle="tab">Group Details</a></li>
+                <li role="presentation"><a href="#events-in-group" aria-controls="events-in-group" role="tab" data-toggle="tab">Events</a></li>
+                <li role="presentation"><a href="#group-members" aria-controls="group-members" role="tab" data-toggle="tab">Members</a></li>
+              </ul>
             </div>
 
-            <div>
-              <h2>Users: </h2>
-              {this.state.group.users.map(function (user) {
-                return (<UserIndexItem key={user.id} user={user}
-                  group={this.state.group} />);
-              }.bind(this))}
-            </div> <br />
+            <div className="tab-content">
 
-            <div>
-              <h2>Events: </h2>
-              {this.state.group.events.map(function (event) {
-                return (<EventIndexItem key={event.id} event={event}
-                  group={this.state.group} />);
-              }.bind(this))}
+              <div role="tabpanel" className="tab-pane active" id="group-details">
+                <div className="detail paper-box">
+                  {['title', 'description', 'location'].map(function (attr) {
+                    return <p key={attr}>{attr}: {this.state.group[attr]}</p>
+                  }.bind(this))}
+                </div>
+              </div>
+
+              <div role="tabpanel" className="tab-pane" id="events-in-group">
+                {this.state.group.events.map(function (event) {
+                  return (<EventIndexItem key={event.id} event={event}
+                    group={this.state.group} />);
+                  }.bind(this))}
+              </div>
+
+              <div role="tabpanel" className="tab-pane" id="group-members">
+                {this.state.group.users.map(function (user) {
+                  return (<UserIndexItem key={user.id} user={user}
+                    group={this.state.group} />);
+                  }.bind(this))}
+              </div>
+              
             </div>
           </div>
         </div>

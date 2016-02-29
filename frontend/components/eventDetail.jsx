@@ -38,22 +38,31 @@ var EventDetail = React.createClass({
 
     return (
       <div>
-        <div className="event-detail">
-          <GroupHeader group={this.state.event.group} />
-          <div className="detail">
-            {['title', 'description', 'start_time', 'end_time', 'location'].map(function (attr) {
-              return <p key={attr}>{attr}: {this.state.event[attr]}</p>;
-            }.bind(this))}
+        <GroupHeader group={this.state.event.group} />
+        <div className="paper-box">
+          <div>
+            <ul className="nav nav-tabs" role="tablist">
+              <li role="presentation" className="active"><a href="#event-details" aria-controls="event-details" role="tab" data-toggle="tab">Event Details</a></li>
+              <li role="presentation"><a href="#users_attending_event" aria-controls="users_attending_event" role="tab" data-toggle="tab">Users</a></li>
+            </ul>
           </div>
 
-          <h2>Users: </h2>
-          {this.state.event.users.map(function (user) {
-            return (<UserIndexItem key={user.id} user={user} />);
-          })}
+          <div className="tab-content">
+
+            <div role="tabpanel" className="tab-pane active" id="event-details">
+              {['title', 'description', 'start_time', 'end_time', 'location'].map(function (attr) {
+                return <p key={attr}>{attr}: {this.state.event[attr]}</p>;
+                }.bind(this))}
+            </div>
+
+            <div role="tabpanel" className="tab-pane" id="users_attending_event">
+              {this.state.event.users.map(function (user) {
+                return (<UserIndexItem key={user.id} user={user} />);
+              })}
+            </div>
+
+          </div>
         </div>
-
-        {this.props.children}
-
       </div>
     );
   }

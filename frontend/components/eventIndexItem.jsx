@@ -10,14 +10,9 @@ var EventIndexItem = React.createClass({
 
   render: function () {
     return (
-      <div onClick={this.showDetail} className="col-sm-4">
-        <img src={this.props.group.banner_url}
-          alt="Event icon is missing"
-          className="event_icon" />
-        <div className="thumbnail-content">
-          <h3>{this.props.event.title}</h3>
-          <p>{this.props.event.description}</p>
-        </div>
+      <div onClick={this.showDetail} className="paper-box clickable">
+        <h3>{this.props.event.title}</h3>
+        <p>{this.props.event.description}</p>
       </div>
     );
   }

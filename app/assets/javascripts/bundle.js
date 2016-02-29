@@ -57,13 +57,14 @@
 	var UserDetail = __webpack_require__(238);
 	var EventsIndex = __webpack_require__(239);
 	var EventDetail = __webpack_require__(243);
-	var GroupIndex = __webpack_require__(250);
-	var GroupDetail = __webpack_require__(246);
+	var GroupsIndex = __webpack_require__(246);
+	var GroupDetail = __webpack_require__(248);
+	var LandingPage = __webpack_require__(249);
 	
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
-	  React.createElement(IndexRoute, { component: GroupIndex }),
+	  React.createElement(IndexRoute, { component: LandingPage }),
 	  React.createElement(Route, { path: 'event/:eventId', component: EventDetail }),
 	  React.createElement(Route, { path: 'group/:groupId', component: GroupDetail }),
 	  React.createElement(Route, { path: 'user/:userId', component: UserDetail })
@@ -31535,6 +31536,7 @@
 	var ApiUtil = __webpack_require__(233);
 	var eventsIndex = __webpack_require__(239);
 	var EventIndexItem = __webpack_require__(241);
+	var GroupIndexItem = __webpack_require__(242);
 	
 	var UserDetail = React.createClass({
 	  displayName: 'UserDetail',
@@ -31575,33 +31577,74 @@
 	      null,
 	      React.createElement(
 	        'div',
-	        { className: 'user-detail' },
+	        { className: 'paper-box' },
 	        React.createElement(
-	          'div',
-	          { className: 'detail' },
-	          React.createElement('img', { src: this.state.user.avatar_url }),
-	          ['name', 'location', 'gender', 'bio'].map(function (attr) {
-	            return React.createElement(
-	              'p',
-	              { key: attr },
-	              attr,
-	              ': ',
-	              this.state.user[attr]
-	            );
-	          }.bind(this))
+	          'ul',
+	          { className: 'nav nav-tabs', role: 'tablist' },
+	          React.createElement(
+	            'li',
+	            { role: 'presentation', className: 'active' },
+	            React.createElement(
+	              'a',
+	              { href: '#profile', 'aria-controls': 'profile', role: 'tab', 'data-toggle': 'tab' },
+	              'Profile'
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            { role: 'presentation' },
+	            React.createElement(
+	              'a',
+	              { href: '#events-attending', 'aria-controls': 'events-attending', role: 'tab', 'data-toggle': 'tab' },
+	              'Events'
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            { role: 'presentation' },
+	            React.createElement(
+	              'a',
+	              { href: '#groups-membership', 'aria-controls': 'groups-membership', role: 'tab', 'data-toggle': 'tab' },
+	              'Groups'
+	            )
+	          )
 	        ),
 	        React.createElement(
 	          'div',
-	          null,
+	          { className: 'tab-content' },
 	          React.createElement(
-	            'h2',
-	            null,
-	            'Events: '
+	            'div',
+	            { role: 'tabpanel', className: 'tab-pane active', id: 'profile' },
+	            React.createElement(
+	              'div',
+	              { className: 'detail paper-box' },
+	              React.createElement('img', { src: this.state.user.avatar_url }),
+	              ['name', 'location', 'gender', 'bio'].map(function (attr) {
+	                return React.createElement(
+	                  'p',
+	                  { key: attr },
+	                  attr,
+	                  ': ',
+	                  this.state.user[attr]
+	                );
+	              }.bind(this))
+	            )
 	          ),
-	          this.state.user.events.map(function (event) {
-	            return React.createElement(EventIndexItem, { key: event.id, event: event,
-	              group: event.group });
-	          })
+	          React.createElement(
+	            'div',
+	            { role: 'tabpanel', className: 'tab-pane', id: 'events-attending' },
+	            this.state.user.events.map(function (event) {
+	              return React.createElement(EventIndexItem, { key: event.id, event: event,
+	                group: event.group });
+	            })
+	          ),
+	          React.createElement(
+	            'div',
+	            { role: 'tabpanel', className: 'tab-pane', id: 'groups-membership' },
+	            this.state.user.groups.map(function (group) {
+	              return React.createElement(GroupIndexItem, { key: group.id, group: group });
+	            })
+	          )
 	        )
 	      )
 	    );
@@ -31619,7 +31662,6 @@
 	var EventStore = __webpack_require__(240);
 	var ApiUtil = __webpack_require__(233);
 	var EventIndexItem = __webpack_require__(241);
-	var EventsHeader = __webpack_require__(242);
 	
 	var EventIndex = React.createClass({
 	  displayName: 'EventIndex',
@@ -31649,7 +31691,6 @@
 	    return React.createElement(
 	      'section',
 	      null,
-	      React.createElement(EventsHeader, null),
 	      React.createElement(
 	        'div',
 	        { className: 'container event-index' },
@@ -31734,23 +31775,16 @@
 	  render: function () {
 	    return React.createElement(
 	      'div',
-	      { onClick: this.showDetail, className: 'col-sm-4' },
-	      React.createElement('img', { src: this.props.group.banner_url,
-	        alt: 'Event icon is missing',
-	        className: 'event_icon' }),
+	      { onClick: this.showDetail, className: 'paper-box clickable' },
 	      React.createElement(
-	        'div',
-	        { className: 'thumbnail-content' },
-	        React.createElement(
-	          'h3',
-	          null,
-	          this.props.event.title
-	        ),
-	        React.createElement(
-	          'p',
-	          null,
-	          this.props.event.description
-	        )
+	        'h3',
+	        null,
+	        this.props.event.title
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        this.props.event.description
 	      )
 	    );
 	  }
@@ -31763,43 +31797,43 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
 	
-	var EventsHeader = React.createClass({
-	  displayName: "EventsHeader",
+	var GroupIndexItem = React.createClass({
+	  displayName: 'GroupIndexItem',
+	
+	  mixins: [History],
+	
+	  showDetail: function () {
+	    this.history.pushState(null, '/group/' + this.props.group.id, {});
+	  },
 	
 	  render: function () {
 	    return React.createElement(
-	      "header",
-	      null,
-	      React.createElement("img", { alt: "MuchAdoAboutMeeting",
-	        src: "http://res.cloudinary.com/deh4rnozs/image/upload/v1456344888/Edwin_Austin_Abbey_King_Lear__Act_I__Scene_I_The_Metropolitan_Museum_of_Art_l4f8ay.jpg" }),
+	      'div',
+	      { onClick: this.showDetail, className: 'col-sm-4' },
+	      React.createElement('img', { src: this.props.group.banner_url,
+	        alt: 'Group icon is missing',
+	        className: 'group-icon clickable' }),
 	      React.createElement(
-	        "div",
-	        { className: "header-content" },
+	        'div',
+	        { className: 'thumbnail-content' },
 	        React.createElement(
-	          "h3",
+	          'h3',
 	          null,
-	          "Nor stony tower, nor walls of beaten brass,",
-	          React.createElement("br", null),
-	          "Nor airless dungeon, nor strong links of iron,",
-	          React.createElement("br", null),
-	          "Can be retentive to the strength of spirit; ",
-	          React.createElement("br", null),
-	          React.createElement("br", null),
-	          "If thou wishest to demo without an account"
+	          this.props.group.title
 	        ),
-	        React.createElement("br", null),
 	        React.createElement(
-	          "button",
-	          { type: "submit", className: "btn-lg btn-default navbar-btn" },
-	          "Clicketh to enter"
+	          'p',
+	          null,
+	          this.props.group.description
 	        )
 	      )
 	    );
 	  }
 	});
 	
-	module.exports = EventsHeader;
+	module.exports = GroupIndexItem;
 
 /***/ },
 /* 243 */
@@ -31851,33 +31885,61 @@
 	    return React.createElement(
 	      'div',
 	      null,
+	      React.createElement(GroupHeader, { group: this.state.event.group }),
 	      React.createElement(
 	        'div',
-	        { className: 'event-detail' },
-	        React.createElement(GroupHeader, { group: this.state.event.group }),
+	        { className: 'paper-box' },
 	        React.createElement(
 	          'div',
-	          { className: 'detail' },
-	          ['title', 'description', 'start_time', 'end_time', 'location'].map(function (attr) {
-	            return React.createElement(
-	              'p',
-	              { key: attr },
-	              attr,
-	              ': ',
-	              this.state.event[attr]
-	            );
-	          }.bind(this))
+	          null,
+	          React.createElement(
+	            'ul',
+	            { className: 'nav nav-tabs', role: 'tablist' },
+	            React.createElement(
+	              'li',
+	              { role: 'presentation', className: 'active' },
+	              React.createElement(
+	                'a',
+	                { href: '#event-details', 'aria-controls': 'event-details', role: 'tab', 'data-toggle': 'tab' },
+	                'Event Details'
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              { role: 'presentation' },
+	              React.createElement(
+	                'a',
+	                { href: '#users_attending_event', 'aria-controls': 'users_attending_event', role: 'tab', 'data-toggle': 'tab' },
+	                'Users'
+	              )
+	            )
+	          )
 	        ),
 	        React.createElement(
-	          'h2',
-	          null,
-	          'Users: '
-	        ),
-	        this.state.event.users.map(function (user) {
-	          return React.createElement(UserIndexItem, { key: user.id, user: user });
-	        })
-	      ),
-	      this.props.children
+	          'div',
+	          { className: 'tab-content' },
+	          React.createElement(
+	            'div',
+	            { role: 'tabpanel', className: 'tab-pane active', id: 'event-details' },
+	            ['title', 'description', 'start_time', 'end_time', 'location'].map(function (attr) {
+	              return React.createElement(
+	                'p',
+	                { key: attr },
+	                attr,
+	                ': ',
+	                this.state.event[attr]
+	              );
+	            }.bind(this))
+	          ),
+	          React.createElement(
+	            'div',
+	            { role: 'tabpanel', className: 'tab-pane', id: 'users_attending_event' },
+	            this.state.event.users.map(function (user) {
+	              return React.createElement(UserIndexItem, { key: user.id, user: user });
+	            })
+	          )
+	        )
+	      )
 	    );
 	  }
 	});
@@ -31906,8 +31968,12 @@
 	      { onClick: this.showDetail, className: 'col-sm-4' },
 	      React.createElement(
 	        'div',
-	        { className: 'clickable' },
-	        React.createElement('img', { src: this.props.user.avatar_url, alt: this.props.user.name }),
+	        { className: 'clickable paper-box' },
+	        React.createElement(
+	          'p',
+	          null,
+	          React.createElement('img', { src: this.props.user.avatar_url, alt: this.props.user.name })
+	        ),
 	        React.createElement(
 	          'p',
 	          null,
@@ -31939,7 +32005,7 @@
 	  render: function () {
 	    return React.createElement(
 	      'header',
-	      { onClick: this.showDetail, className: 'clickable' },
+	      { onClick: this.showDetail, className: 'clickable header-content' },
 	      React.createElement('img', { alt: this.props.group.title,
 	        src: this.props.group.banner_url })
 	    );
@@ -31950,6 +32016,107 @@
 
 /***/ },
 /* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var GroupStore = __webpack_require__(247);
+	var ApiUtil = __webpack_require__(233);
+	var GroupIndexItem = __webpack_require__(242);
+	
+	var GroupsIndex = React.createClass({
+	  displayName: 'GroupsIndex',
+	
+	  getInitialState: function () {
+	    return {
+	      groups: GroupStore.all()
+	    };
+	  },
+	
+	  componentDidMount: function () {
+	    this.groupListener = GroupStore.addListener(this._onChange);
+	    ApiUtil.fetchGroups();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.groupListener.remove();
+	  },
+	
+	  _onChange: function () {
+	    this.setState({
+	      groups: GroupStore.all()
+	    });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'section',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'container group-index' },
+	        React.createElement(
+	          'div',
+	          { className: 'row no-gutters' },
+	          this.state.groups.map(function (group) {
+	            return React.createElement(GroupIndexItem, { key: group.id, group: group });
+	          })
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = GroupsIndex;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(212).Store;
+	var AppDispatcher = __webpack_require__(230);
+	var _groups = {};
+	var GroupStore = new Store(AppDispatcher);
+	
+	GroupStore.all = function () {
+	  var groups = [];
+	  for (var id in _groups) {
+	    groups.push(_groups[id]);
+	  }
+	  return groups;
+	};
+	
+	GroupStore.find = function (id) {
+	  return _groups[id];
+	};
+	
+	var resetGroups = function (groups) {
+	  _groups = {};
+	  groups.forEach(function (group) {
+	    _groups[group.id] = group;
+	  });
+	};
+	
+	var resetGroup = function (group) {
+	  _groups[group.id] = group;
+	};
+	
+	GroupStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case GroupConstants.GROUPS_RECEIVED:
+	      resetGroups(payload.groups);
+	      GroupStore.__emitChange();
+	      break;
+	    case GroupConstants.GROUP_RECEIVED:
+	      resetGroup(payload.group);
+	      GroupStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = GroupStore;
+
+/***/ },
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32002,50 +32169,81 @@
 	    return React.createElement(
 	      'div',
 	      null,
+	      React.createElement(GroupHeader, { group: this.state.group }),
 	      React.createElement(
 	        'div',
-	        { className: 'group-detail' },
-	        React.createElement(GroupHeader, { group: this.state.group }),
-	        React.createElement(
-	          'div',
-	          { className: 'detail' },
-	          ['title', 'description', 'location'].map(function (attr) {
-	            return React.createElement(
-	              'p',
-	              { key: attr },
-	              attr,
-	              ': ',
-	              this.state.group[attr]
-	            );
-	          }.bind(this))
-	        ),
+	        { className: 'paper-box' },
 	        React.createElement(
 	          'div',
 	          null,
 	          React.createElement(
-	            'h2',
-	            null,
-	            'Users: '
-	          ),
-	          this.state.group.users.map(function (user) {
-	            return React.createElement(UserIndexItem, { key: user.id, user: user,
-	              group: this.state.group });
-	          }.bind(this))
+	            'ul',
+	            { className: 'nav nav-tabs', role: 'tablist' },
+	            React.createElement(
+	              'li',
+	              { role: 'presentation', className: 'active' },
+	              React.createElement(
+	                'a',
+	                { href: '#group-details', 'aria-controls': 'group-details', role: 'tab', 'data-toggle': 'tab' },
+	                'Group Details'
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              { role: 'presentation' },
+	              React.createElement(
+	                'a',
+	                { href: '#events-in-group', 'aria-controls': 'events-in-group', role: 'tab', 'data-toggle': 'tab' },
+	                'Events'
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              { role: 'presentation' },
+	              React.createElement(
+	                'a',
+	                { href: '#group-members', 'aria-controls': 'group-members', role: 'tab', 'data-toggle': 'tab' },
+	                'Members'
+	              )
+	            )
+	          )
 	        ),
-	        ' ',
-	        React.createElement('br', null),
 	        React.createElement(
 	          'div',
-	          null,
+	          { className: 'tab-content' },
 	          React.createElement(
-	            'h2',
-	            null,
-	            'Events: '
+	            'div',
+	            { role: 'tabpanel', className: 'tab-pane active', id: 'group-details' },
+	            React.createElement(
+	              'div',
+	              { className: 'detail paper-box' },
+	              ['title', 'description', 'location'].map(function (attr) {
+	                return React.createElement(
+	                  'p',
+	                  { key: attr },
+	                  attr,
+	                  ': ',
+	                  this.state.group[attr]
+	                );
+	              }.bind(this))
+	            )
 	          ),
-	          this.state.group.events.map(function (event) {
-	            return React.createElement(EventIndexItem, { key: event.id, event: event,
-	              group: this.state.group });
-	          }.bind(this))
+	          React.createElement(
+	            'div',
+	            { role: 'tabpanel', className: 'tab-pane', id: 'events-in-group' },
+	            this.state.group.events.map(function (event) {
+	              return React.createElement(EventIndexItem, { key: event.id, event: event,
+	                group: this.state.group });
+	            }.bind(this))
+	          ),
+	          React.createElement(
+	            'div',
+	            { role: 'tabpanel', className: 'tab-pane', id: 'group-members' },
+	            this.state.group.users.map(function (user) {
+	              return React.createElement(UserIndexItem, { key: user.id, user: user,
+	                group: this.state.group });
+	            }.bind(this))
+	          )
 	        )
 	      )
 	    );
@@ -32055,151 +32253,81 @@
 	module.exports = GroupDetail;
 
 /***/ },
-/* 247 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Store = __webpack_require__(212).Store;
-	var AppDispatcher = __webpack_require__(230);
-	var _groups = {};
-	var GroupStore = new Store(AppDispatcher);
-	
-	GroupStore.all = function () {
-	  var groups = [];
-	  for (var id in _groups) {
-	    groups.push(_groups[id]);
-	  }
-	  return groups;
-	};
-	
-	GroupStore.find = function (id) {
-	  return _groups[id];
-	};
-	
-	var resetGroups = function (groups) {
-	  _groups = {};
-	  groups.forEach(function (group) {
-	    _groups[group.id] = group;
-	  });
-	};
-	
-	var resetGroup = function (group) {
-	  _groups[group.id] = group;
-	};
-	
-	GroupStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case GroupConstants.GROUPS_RECEIVED:
-	      resetGroups(payload.groups);
-	      GroupStore.__emitChange();
-	      break;
-	    case GroupConstants.GROUP_RECEIVED:
-	      resetGroup(payload.group);
-	      GroupStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	module.exports = GroupStore;
-
-/***/ },
-/* 248 */,
 /* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var History = __webpack_require__(159).History;
+	var LandingPageHeader = __webpack_require__(250);
+	var EventsIndex = __webpack_require__(239);
+	var GroupsIndex = __webpack_require__(246);
 	
-	var GroupIndexItem = React.createClass({
-	  displayName: 'GroupIndexItem',
+	var LandingPage = React.createClass({
+	  displayName: 'LandingPage',
 	
-	  mixins: [History],
-	
-	  showDetail: function () {
-	    this.history.pushState(null, '/group/' + this.props.group.id, {});
-	  },
 	
 	  render: function () {
+	
+	    var landingPageContents = function () {
+	      if (window.current_user === undefined) {
+	        return React.createElement(GroupsIndex, null);
+	      } else {
+	        return React.createElement(EventsIndex, null);
+	      }
+	    };
+	
 	    return React.createElement(
-	      'div',
-	      { onClick: this.showDetail, className: 'col-sm-4' },
-	      React.createElement('img', { src: this.props.group.banner_url,
-	        alt: 'Group icon is missing',
-	        className: 'group_icon' }),
-	      React.createElement(
-	        'div',
-	        { className: 'thumbnail-content' },
-	        React.createElement(
-	          'h3',
-	          null,
-	          this.props.group.title
-	        ),
-	        React.createElement(
-	          'p',
-	          null,
-	          this.props.group.description
-	        )
-	      )
+	      'section',
+	      null,
+	      React.createElement(LandingPageHeader, null),
+	      landingPageContents()
 	    );
 	  }
 	});
 	
-	module.exports = GroupIndexItem;
+	module.exports = LandingPage;
 
 /***/ },
 /* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var GroupStore = __webpack_require__(247);
-	var ApiUtil = __webpack_require__(233);
-	var GroupIndexItem = __webpack_require__(249);
-	var EventsHeader = __webpack_require__(242);
 	
-	var GroupIndex = React.createClass({
-	  displayName: 'GroupIndex',
-	
-	  getInitialState: function () {
-	    return {
-	      groups: GroupStore.all()
-	    };
-	  },
-	
-	  componentDidMount: function () {
-	    this.groupListener = GroupStore.addListener(this._onChange);
-	    ApiUtil.fetchGroups();
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.groupListener.remove();
-	  },
-	
-	  _onChange: function () {
-	    this.setState({
-	      groups: GroupStore.all()
-	    });
-	  },
+	var LandingPageHeader = React.createClass({
+	  displayName: "LandingPageHeader",
 	
 	  render: function () {
 	    return React.createElement(
-	      'section',
+	      "header",
 	      null,
-	      React.createElement(EventsHeader, null),
+	      React.createElement("img", { alt: "MuchAdoAboutMeeting",
+	        src: "http://res.cloudinary.com/deh4rnozs/image/upload/v1456344888/Edwin_Austin_Abbey_King_Lear__Act_I__Scene_I_The_Metropolitan_Museum_of_Art_l4f8ay.jpg" }),
 	      React.createElement(
-	        'div',
-	        { className: 'container group-index' },
+	        "div",
+	        { className: "header-content" },
 	        React.createElement(
-	          'div',
-	          { className: 'row no-gutters' },
-	          this.state.groups.map(function (group) {
-	            return React.createElement(GroupIndexItem, { key: group.id, group: group });
-	          })
+	          "h3",
+	          null,
+	          "Nor stony tower, nor walls of beaten brass,",
+	          React.createElement("br", null),
+	          "Nor airless dungeon, nor strong links of iron,",
+	          React.createElement("br", null),
+	          "Can be retentive to the strength of spirit; ",
+	          React.createElement("br", null),
+	          React.createElement("br", null),
+	          "If thou wishest to demo without an account"
+	        ),
+	        React.createElement("br", null),
+	        React.createElement(
+	          "button",
+	          { type: "submit", className: "btn-lg btn-default navbar-btn" },
+	          "Clicketh to enter"
 	        )
 	      )
 	    );
 	  }
 	});
 	
-	module.exports = GroupIndex;
+	module.exports = LandingPageHeader;
 
 /***/ }
 /******/ ]);

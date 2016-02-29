@@ -2,9 +2,8 @@ var React = require('react');
 var GroupStore = require('../stores/group');
 var ApiUtil = require('../util/api_util');
 var GroupIndexItem = require('./groupIndexItem');
-var EventsHeader = require('./eventsHeader');
 
-var GroupIndex = React.createClass({
+var GroupsIndex = React.createClass({
   getInitialState: function () {
     return {
       groups: GroupStore.all()
@@ -29,7 +28,6 @@ var GroupIndex = React.createClass({
   render: function () {
     return (
       <section>
-        <EventsHeader />
         <div className="container group-index">
           <div className="row no-gutters">
             {
@@ -44,4 +42,4 @@ var GroupIndex = React.createClass({
   }
 });
 
-module.exports = GroupIndex;
+module.exports = GroupsIndex;

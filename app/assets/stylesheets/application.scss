@@ -19,7 +19,7 @@
 
 body {
   padding-top: 70px;
-  background-image: url("http://res.cloudinary.com/deh4rnozs/image/upload/v1456423022/seamless_paper_texture_xhdphq.png");
+  background-image: url("http://res.cloudinary.com/deh4rnozs/image/upload/v1456718763/97e4920803e5054f990f8cd529a8c0e4_a0vcrg.jpg");
 }
 
 header {
@@ -75,10 +75,18 @@ header .header-content {
   padding-top: 20px;
 }
 
-.group_icon {
+.group-icon {
   position: absolute;
   left: -250px;
   top: 0px;
-  z-index: -1;
   clip-path: inset(25px 250px 25px 250px);
+}
+
+.paper-box {
+  font-family: times;
+  font-size: 20px;
+  background-image:url("http://res.cloudinary.com/deh4rnozs/image/upload/v1456718348/paper_ztqxwe.png");
+  margin: 40px;
+  padding: 20px;
+  display: inline-block;
 }

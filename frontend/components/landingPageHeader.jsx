@@ -1,6 +1,6 @@
 var React = require('react');
 
-var EventsHeader = React.createClass({
+var LandingPageHeader = React.createClass({
   render: function () {
     return (
       <header>
@@ -20,4 +20,4 @@ var EventsHeader = React.createClass({
   }
 });
 
-module.exports = EventsHeader;
+module.exports = LandingPageHeader;

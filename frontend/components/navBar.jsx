@@ -17,7 +17,7 @@ var NavBar = React.createClass({
           </li>
         );
       }
-    }
+    };
 
     var logInButtonAccordingToLogInStatus = function () {
       if (window.current_user === undefined) {
