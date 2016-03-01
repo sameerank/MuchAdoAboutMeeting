@@ -18,9 +18,6 @@ class Event < ActiveRecord::Base
   validates :title, :description, :start_time, :location, :host_id,
   :group_id, presence: true
 
-  attr_accessor :start_time, :end_time, :host_id
-
-
   belongs_to :host,
   foreign_key: :host_id,
   primary_key: :id,
