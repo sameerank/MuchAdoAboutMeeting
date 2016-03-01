@@ -59,7 +59,8 @@
 	var EventDetail = __webpack_require__(243);
 	var GroupsIndex = __webpack_require__(246);
 	var GroupDetail = __webpack_require__(248);
-	var LandingPage = __webpack_require__(249);
+	var GroupForm = __webpack_require__(249);
+	var LandingPage = __webpack_require__(254);
 	
 	var routes = React.createElement(
 	  Route,
@@ -67,6 +68,7 @@
 	  React.createElement(IndexRoute, { component: LandingPage }),
 	  React.createElement(Route, { path: 'event/:eventId', component: EventDetail }),
 	  React.createElement(Route, { path: 'group/:groupId', component: GroupDetail }),
+	  React.createElement(Route, { path: 'groupForm', component: GroupForm }),
 	  React.createElement(Route, { path: 'user/:userId', component: UserDetail })
 	);
 	
@@ -24348,28 +24350,34 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
 	
 	var NavBar = React.createClass({
-	  displayName: "NavBar",
+	  displayName: 'NavBar',
+	
+	  mixins: [History],
 	
 	  _logout: function () {
 	    ApiUtil.logout();
 	  },
 	
-	  render: function () {
+	  _toGroupForm: function () {
+	    this.history.pushState(null, 'groupForm', {});
+	  },
 	
+	  render: function () {
 	    var signUpButtonifNotLoggedIn = function () {
 	      if (window.current_user === undefined) {
 	        return React.createElement(
-	          "li",
+	          'li',
 	          null,
 	          React.createElement(
-	            "form",
-	            { action: "./users/new" },
+	            'form',
+	            { action: './users/new' },
 	            React.createElement(
-	              "button",
-	              { type: "submit", className: "btn btn-danger navbar-btn" },
-	              "Signeth Up"
+	              'button',
+	              { type: 'submit', className: 'btn btn-danger navbar-btn' },
+	              'Signeth Up'
 	            )
 	          )
 	        );
@@ -24379,91 +24387,91 @@
 	    var logInButtonAccordingToLogInStatus = function () {
 	      if (window.current_user === undefined) {
 	        return React.createElement(
-	          "li",
+	          'li',
 	          null,
 	          React.createElement(
-	            "a",
-	            { href: "./session/new" },
-	            "Logeth In"
+	            'a',
+	            { href: './session/new' },
+	            'Logeth In'
 	          )
 	        );
 	      } else {
 	        return React.createElement(
-	          "li",
+	          'li',
 	          null,
 	          React.createElement(
-	            "a",
-	            { href: "#", onClick: this._logout },
-	            "Logeth Out"
+	            'a',
+	            { href: '#', onClick: this._logout },
+	            'Logeth Out'
 	          )
 	        );
 	      }
 	    }.bind(this);
 	
 	    return React.createElement(
-	      "nav",
-	      { className: "navbar navbar-default navbar-fixed-top" },
+	      'nav',
+	      { className: 'navbar navbar-default navbar-fixed-top' },
 	      React.createElement(
-	        "div",
-	        { className: "container" },
+	        'div',
+	        { className: 'container' },
 	        React.createElement(
-	          "a",
-	          { className: "navbar-brand", href: "#" },
-	          React.createElement("img", { alt: "MuchAdoAboutMeeting", src: "http://img1.meetupstatic.com/img/94156887029318281691566697/logo.svg" })
+	          'a',
+	          { className: 'navbar-brand', href: '#' },
+	          React.createElement('img', { alt: 'MuchAdoAboutMeeting', src: 'http://img1.meetupstatic.com/img/94156887029318281691566697/logo.svg' })
 	        ),
 	        React.createElement(
-	          "div",
-	          { className: "navbar-collapse collapse" },
+	          'div',
+	          { className: 'navbar-collapse collapse' },
 	          React.createElement(
-	            "ul",
-	            { className: "nav navbar-nav navbar-left" },
+	            'ul',
+	            { className: 'nav navbar-nav navbar-left' },
 	            React.createElement(
-	              "li",
+	              'li',
 	              null,
 	              React.createElement(
-	                "a",
-	                { href: "#" },
+	                'a',
+	                { href: '#' },
 	                React.createElement(
-	                  "b",
+	                  'b',
 	                  null,
-	                  "Findeth"
+	                  'Findeth'
 	                ),
-	                " a meeting group"
+	                ' a meeting group'
 	              )
 	            ),
 	            React.createElement(
-	              "li",
+	              'li',
 	              null,
 	              React.createElement(
-	                "a",
-	                { href: "#" },
+	                'a',
+	                { onClick: this._toGroupForm, className: 'clickable' },
 	                React.createElement(
-	                  "b",
+	                  'b',
 	                  null,
-	                  "Starteth"
+	                  'Starteth'
 	                ),
-	                " a meeting group"
+	                ' a meeting group'
 	              )
 	            )
 	          ),
 	          React.createElement(
-	            "ul",
-	            { className: "nav navbar-nav navbar-right" },
+	            'ul',
+	            { className: 'nav navbar-nav navbar-right' },
 	            React.createElement(
-	              "li",
+	              'li',
 	              null,
 	              React.createElement(
-	                "form",
-	                { className: "navbar-form navbar-left", role: "search" },
+	                'form',
+	                { className: 'navbar-form navbar-left', role: 'search' },
 	                React.createElement(
-	                  "div",
-	                  { className: "form-group" },
-	                  React.createElement("input", { type: "text", className: "form-control", placeholder: "Search" })
+	                  'div',
+	                  { className: 'form-group' },
+	                  React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Search' })
 	                ),
 	                React.createElement(
-	                  "button",
-	                  { type: "submit", className: "btn btn-default" },
-	                  React.createElement("span", { className: "glyphicon glyphicon-search", "aria-hidden": "true" })
+	                  'button',
+	                  { type: 'submit', className: 'btn btn-default' },
+	                  React.createElement('span', { className: 'glyphicon glyphicon-search', 'aria-hidden': 'true' })
 	                )
 	              )
 	            ),
@@ -31342,6 +31350,19 @@
 	var ApiActions = __webpack_require__(234);
 	
 	ApiUtil = {
+	
+	  createGroup: function (group, callback) {
+	    $.ajax({
+	      url: "api/groups",
+	      method: "POST",
+	      data: { group: group },
+	      success: function (resp) {
+	        ApiActions.receiveSingleGroup(resp);
+	        callback(resp.id);
+	      }
+	    });
+	  },
+	
 	  fetchUsers: function () {
 	    var options = {
 	      url: "api/users",
@@ -31921,7 +31942,7 @@
 	          React.createElement(
 	            'div',
 	            { role: 'tabpanel', className: 'tab-pane active', id: 'event-details' },
-	            ['title', 'description', 'start_time', 'end_time', 'location'].map(function (attr) {
+	            ['title', 'description', 'location', 'start_time', 'end_time', 'created_at'].map(function (attr) {
 	              return React.createElement(
 	                'p',
 	                { key: attr },
@@ -32257,7 +32278,337 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var LandingPageHeader = __webpack_require__(250);
+	var ApiUtil = __webpack_require__(233);
+	var History = __webpack_require__(159).History;
+	var LinkedStateMixin = __webpack_require__(250);
+	
+	var GroupForm = React.createClass({
+	  displayName: 'GroupForm',
+	
+	
+	  mixins: [LinkedStateMixin, History],
+	
+	  blankAttrs: {
+	    title: '',
+	    description: '',
+	    location: '',
+	    organizer_id: ''
+	  },
+	
+	  getInitialState: function () {
+	    return this.blankAttrs;
+	  },
+	
+	  createGroup: function (event) {
+	    event.preventDefault();
+	    var group = {};
+	
+	    Object.keys(this.state).forEach(function (key) {
+	      group[key] = this.state[key];
+	    }.bind(this));
+	
+	    ApiUtil.createGroup(group, function (id) {
+	      this.props.history.pushState(null, "group/" + id, {});
+	    }.bind(this));
+	
+	    this.setState(this.blankAttrs);
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'form',
+	      { onSubmit: this.createGroup },
+	      React.createElement(
+	        'div',
+	        { className: 'form-group' },
+	        React.createElement(
+	          'label',
+	          null,
+	          'Title'
+	        ),
+	        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Title',
+	          valueLink: this.linkState("title") })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'form-group' },
+	        React.createElement(
+	          'label',
+	          null,
+	          'Description'
+	        ),
+	        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Description',
+	          valueLink: this.linkState("description") })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'form-group' },
+	        React.createElement(
+	          'label',
+	          null,
+	          'Location'
+	        ),
+	        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Location',
+	          valueLink: this.linkState("location") })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'form-group' },
+	        React.createElement(
+	          'label',
+	          null,
+	          'Banner URL'
+	        ),
+	        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Banner URL',
+	          valueLink: this.linkState("banner_url") })
+	      ),
+	      React.createElement(
+	        'button',
+	        { type: 'submit', className: 'btn btn-default' },
+	        'Createth the group!'
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = GroupForm;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(251);
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule LinkedStateMixin
+	 * @typechecks static-only
+	 */
+	
+	'use strict';
+	
+	var ReactLink = __webpack_require__(252);
+	var ReactStateSetters = __webpack_require__(253);
+	
+	/**
+	 * A simple mixin around ReactLink.forState().
+	 */
+	var LinkedStateMixin = {
+	  /**
+	   * Create a ReactLink that's linked to part of this component's state. The
+	   * ReactLink will have the current value of this.state[key] and will call
+	   * setState() when a change is requested.
+	   *
+	   * @param {string} key state key to update. Note: you may want to use keyOf()
+	   * if you're using Google Closure Compiler advanced mode.
+	   * @return {ReactLink} ReactLink instance linking to the state.
+	   */
+	  linkState: function (key) {
+	    return new ReactLink(this.state[key], ReactStateSetters.createStateKeySetter(this, key));
+	  }
+	};
+	
+	module.exports = LinkedStateMixin;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactLink
+	 * @typechecks static-only
+	 */
+	
+	'use strict';
+	
+	/**
+	 * ReactLink encapsulates a common pattern in which a component wants to modify
+	 * a prop received from its parent. ReactLink allows the parent to pass down a
+	 * value coupled with a callback that, when invoked, expresses an intent to
+	 * modify that value. For example:
+	 *
+	 * React.createClass({
+	 *   getInitialState: function() {
+	 *     return {value: ''};
+	 *   },
+	 *   render: function() {
+	 *     var valueLink = new ReactLink(this.state.value, this._handleValueChange);
+	 *     return <input valueLink={valueLink} />;
+	 *   },
+	 *   _handleValueChange: function(newValue) {
+	 *     this.setState({value: newValue});
+	 *   }
+	 * });
+	 *
+	 * We have provided some sugary mixins to make the creation and
+	 * consumption of ReactLink easier; see LinkedValueUtils and LinkedStateMixin.
+	 */
+	
+	var React = __webpack_require__(2);
+	
+	/**
+	 * @param {*} value current value of the link
+	 * @param {function} requestChange callback to request a change
+	 */
+	function ReactLink(value, requestChange) {
+	  this.value = value;
+	  this.requestChange = requestChange;
+	}
+	
+	/**
+	 * Creates a PropType that enforces the ReactLink API and optionally checks the
+	 * type of the value being passed inside the link. Example:
+	 *
+	 * MyComponent.propTypes = {
+	 *   tabIndexLink: ReactLink.PropTypes.link(React.PropTypes.number)
+	 * }
+	 */
+	function createLinkTypeChecker(linkType) {
+	  var shapes = {
+	    value: typeof linkType === 'undefined' ? React.PropTypes.any.isRequired : linkType.isRequired,
+	    requestChange: React.PropTypes.func.isRequired
+	  };
+	  return React.PropTypes.shape(shapes);
+	}
+	
+	ReactLink.PropTypes = {
+	  link: createLinkTypeChecker
+	};
+	
+	module.exports = ReactLink;
+
+/***/ },
+/* 253 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactStateSetters
+	 */
+	
+	'use strict';
+	
+	var ReactStateSetters = {
+	  /**
+	   * Returns a function that calls the provided function, and uses the result
+	   * of that to set the component's state.
+	   *
+	   * @param {ReactCompositeComponent} component
+	   * @param {function} funcReturningState Returned callback uses this to
+	   *                                      determine how to update state.
+	   * @return {function} callback that when invoked uses funcReturningState to
+	   *                    determined the object literal to setState.
+	   */
+	  createStateSetter: function (component, funcReturningState) {
+	    return function (a, b, c, d, e, f) {
+	      var partialState = funcReturningState.call(component, a, b, c, d, e, f);
+	      if (partialState) {
+	        component.setState(partialState);
+	      }
+	    };
+	  },
+	
+	  /**
+	   * Returns a single-argument callback that can be used to update a single
+	   * key in the component's state.
+	   *
+	   * Note: this is memoized function, which makes it inexpensive to call.
+	   *
+	   * @param {ReactCompositeComponent} component
+	   * @param {string} key The key in the state that you should update.
+	   * @return {function} callback of 1 argument which calls setState() with
+	   *                    the provided keyName and callback argument.
+	   */
+	  createStateKeySetter: function (component, key) {
+	    // Memoize the setters.
+	    var cache = component.__keySetters || (component.__keySetters = {});
+	    return cache[key] || (cache[key] = createStateKeySetter(component, key));
+	  }
+	};
+	
+	function createStateKeySetter(component, key) {
+	  // Partial state is allocated outside of the function closure so it can be
+	  // reused with every call, avoiding memory allocation when this function
+	  // is called.
+	  var partialState = {};
+	  return function stateKeySetter(value) {
+	    partialState[key] = value;
+	    component.setState(partialState);
+	  };
+	}
+	
+	ReactStateSetters.Mixin = {
+	  /**
+	   * Returns a function that calls the provided function, and uses the result
+	   * of that to set the component's state.
+	   *
+	   * For example, these statements are equivalent:
+	   *
+	   *   this.setState({x: 1});
+	   *   this.createStateSetter(function(xValue) {
+	   *     return {x: xValue};
+	   *   })(1);
+	   *
+	   * @param {function} funcReturningState Returned callback uses this to
+	   *                                      determine how to update state.
+	   * @return {function} callback that when invoked uses funcReturningState to
+	   *                    determined the object literal to setState.
+	   */
+	  createStateSetter: function (funcReturningState) {
+	    return ReactStateSetters.createStateSetter(this, funcReturningState);
+	  },
+	
+	  /**
+	   * Returns a single-argument callback that can be used to update a single
+	   * key in the component's state.
+	   *
+	   * For example, these statements are equivalent:
+	   *
+	   *   this.setState({x: 1});
+	   *   this.createStateKeySetter('x')(1);
+	   *
+	   * Note: this is memoized function, which makes it inexpensive to call.
+	   *
+	   * @param {string} key The key in the state that you should update.
+	   * @return {function} callback of 1 argument which calls setState() with
+	   *                    the provided keyName and callback argument.
+	   */
+	  createStateKeySetter: function (key) {
+	    return ReactStateSetters.createStateKeySetter(this, key);
+	  }
+	};
+	
+	module.exports = ReactStateSetters;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var LandingPageHeader = __webpack_require__(255);
 	var EventsIndex = __webpack_require__(239);
 	var GroupsIndex = __webpack_require__(246);
 	
@@ -32287,7 +32638,7 @@
 	module.exports = LandingPage;
 
 /***/ },
-/* 250 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);

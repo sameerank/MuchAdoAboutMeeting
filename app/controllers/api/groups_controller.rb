@@ -1,5 +1,5 @@
 class Api::GroupsController < ApplicationController
-  before_action :require_sign_in!, only: [:update, :create, :delete]
+  # before_action :require_sign_in!, only: [:update, :create, :delete]
 
   def index
     @groups = Group.all
@@ -7,6 +7,21 @@ class Api::GroupsController < ApplicationController
 
   def show
     @group = Group.find_by(id: params[:id])
+  end
+
+  def create
+    @group = Group.new(group_params)
+    @group.organizer_id = current_user.id
+    if @group.banner_url.nil?
+      @group.banner_url = "http://lorempixel.com/800/200/animals/"
+    end
+
+    if @group.save
+      render :show
+    else
+      render json: @group.errors.full_messages, status: 422
+    end
+
   end
 
   private

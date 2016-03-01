@@ -50,7 +50,7 @@ var EventDetail = React.createClass({
           <div className="tab-content">
 
             <div role="tabpanel" className="tab-pane active" id="event-details">
-              {['title', 'description', 'start_time', 'end_time', 'location'].map(function (attr) {
+              {['title', 'description', 'location', 'start_time', 'end_time', 'created_at'].map(function (attr) {
                 return <p key={attr}>{attr}: {this.state.event[attr]}</p>;
                 }.bind(this))}
             </div>

@@ -1,6 +1,19 @@
 var ApiActions = require('../actions/api_actions');
 
 ApiUtil = {
+
+  createGroup: function (group, callback) {
+    $.ajax({
+      url: "api/groups",
+      method: "POST",
+      data: {group: group},
+      success: function (resp) {
+        ApiActions.receiveSingleGroup(resp);
+        callback(resp.id);
+      }
+    });
+  },
+
   fetchUsers: function () {
     var options = {
       url: "api/users",

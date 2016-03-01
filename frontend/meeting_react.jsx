@@ -13,6 +13,7 @@ var EventsIndex = require('./components/eventsIndex');
 var EventDetail = require('./components/eventDetail');
 var GroupsIndex = require('./components/groupsIndex');
 var GroupDetail = require('./components/groupDetail');
+var GroupForm = require('./components/groupForm');
 var LandingPage = require('./components/landingPage');
 
 
@@ -21,6 +22,7 @@ var routes = (
     <IndexRoute component={LandingPage}/>
     <Route path="event/:eventId" component={EventDetail} />
     <Route path="group/:groupId" component={GroupDetail} />
+    <Route path="groupForm" component={GroupForm} />
     <Route path="user/:userId" component={UserDetail} />
   </Route>
 );

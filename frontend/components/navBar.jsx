@@ -1,12 +1,18 @@
 var React = require('react');
+var History = require('react-router').History;
 
 var NavBar = React.createClass({
+  mixins: [History],
+
   _logout: function () {
     ApiUtil.logout();
   },
 
-  render: function () {
+  _toGroupForm: function () {
+    this.history.pushState(null, 'groupForm', {});
+  },
 
+  render: function () {
     var signUpButtonifNotLoggedIn = function () {
       if (window.current_user === undefined) {
         return (
@@ -29,7 +35,7 @@ var NavBar = React.createClass({
       } else {
         return (
           <li>
-            <a href="#" onClick={this._logout} >Logeth Out</a>
+            <a href="#" onClick={this._logout}>Logeth Out</a>
           </li>
         );
       }
@@ -47,7 +53,7 @@ var NavBar = React.createClass({
                 <a href="#"><b>Findeth</b> a meeting group</a>
               </li>
               <li>
-                <a href="#"><b>Starteth</b> a meeting group</a>
+                <a onClick={this._toGroupForm} className="clickable"><b>Starteth</b> a meeting group</a>
               </li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
