@@ -2,6 +2,9 @@ var React = require('react');
 var ApiUtil = require('../util/api_util');
 var History = require('react-router').History;
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
+var DateTimeField = require('react-bootstrap-datetimepicker');
+
+var moment = require('moment');
 
 var EventForm = React.createClass({
 
@@ -14,13 +17,13 @@ var EventForm = React.createClass({
       start_time: '',
       end_time: '',
       location: '',
-      host_id: '',
-      group_id: this.props
+      host_id: window.current_user,
+      group_id: this.props.location.state.id
     };
   },
 
   getInitialState: function () {
-    return this.blankAttrs;
+    return this.blankAttrs();
   },
 
   createEvent: function (event) {
@@ -36,6 +39,14 @@ var EventForm = React.createClass({
     }.bind(this));
 
     this.setState(this.blankAttrs);
+  },
+
+  handleDateChangeStartTime: function (dateTime) {
+    this.setState({ start_time: moment(parseInt(dateTime)).format('MM-DD-YYYY HH:mm')});
+  },
+
+  handleDateChangeEndTime: function (dateTime) {
+    this.setState({ end_time: moment(parseInt(dateTime)).format('MM-DD-YYYY HH:mm')});
   },
 
   render: function () {
@@ -61,14 +72,17 @@ var EventForm = React.createClass({
               </div>
               <div className="form-group">
                 <label>Start time</label>
-                <textarea rows="7" className="form-control" placeholder="Start time"
-                  valueLink={this.linkState("start_time")} />
+                <DateTimeField
+                  defaultText="Start time"
+                  onChange={this.handleDateChangeStartTime} />
               </div>
               <div className="form-group">
                 <label>End time</label>
-                <input type="text" className="form-control" placeholder="End time"
-                  valueLink={this.linkState("end_time")} />
+                <DateTimeField
+                  defaultText="End time"
+                  onChange={this.handleDateChangeEndTime} />
               </div>
+
 
               <button type="submit" className="btn btn-default">Createth the event!</button>
             </form>

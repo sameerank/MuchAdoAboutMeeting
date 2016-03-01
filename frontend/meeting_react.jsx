@@ -22,9 +22,9 @@ var routes = (
   <Route path="/" component={App}>
     <IndexRoute component={LandingPage}/>
     <Route path="event/:eventId" component={EventDetail} />
-    <Route path="eventForm" component={GroupForm} />
+    <Route path="eventForm" component={EventForm} />
     <Route path="group/:groupId" component={GroupDetail} />
-    <Route path="groupForm" component={EventForm} />
+    <Route path="groupForm" component={GroupForm} />
     <Route path="user/:userId" component={UserDetail} />
   </Route>
 );

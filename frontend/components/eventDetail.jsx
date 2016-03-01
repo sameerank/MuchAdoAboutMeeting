@@ -49,13 +49,13 @@ var EventDetail = React.createClass({
 
           <div className="tab-content">
 
-            <div role="tabpanel" className="tab-pane active" id="event-details">
+            <div role="tabpanel" className="tab-pane active fade in" id="event-details">
               {['title', 'description', 'location', 'start_time', 'end_time', 'created_at'].map(function (attr) {
                 return <p key={attr}>{attr}: {this.state.event[attr]}</p>;
                 }.bind(this))}
             </div>
 
-            <div role="tabpanel" className="tab-pane" id="users_attending_event">
+            <div role="tabpanel" className="tab-pane fade" id="users_attending_event">
               {this.state.event.users.map(function (user) {
                 return (<UserIndexItem key={user.id} user={user} />);
               })}

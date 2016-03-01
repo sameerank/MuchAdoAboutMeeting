@@ -14,7 +14,10 @@ class Api::EventsController < ApplicationController
     @event = Event.new(event_params)
     @event.host_id = current_user.id
 
-    if @event.save
+    @event.start_time = DateTime.strptime(event_params[:start_time], '%m-%d-%Y %H:%M')
+    @event.end_time = DateTime.strptime(event_params[:end_time], '%m-%d-%Y %H:%M')
+
+    if @event.save!
       render :show
     else
       render json: @event.errors.full_messages, status: 422

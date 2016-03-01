@@ -46,7 +46,7 @@ var UserDetail = React.createClass({
 
           <div className="tab-content">
 
-            <div role="tabpanel" className="tab-pane active" id="profile">
+            <div role="tabpanel" className="tab-pane active fade in" id="profile">
               <div className="detail paper-box">
                 <img src={this.state.user.avatar_url} />
                 {['name', 'location', 'gender', 'bio'].map(function (attr) {
@@ -55,19 +55,19 @@ var UserDetail = React.createClass({
                 </div>
             </div>
 
-            <div role="tabpanel" className="tab-pane" id="events-attending">
+            <div role="tabpanel" className="tab-pane fade" id="events-attending">
               {this.state.user.events.map(function (event) {
                 return (<EventIndexItem key={event.id} event={event}
                   group={event.group} />);
                 })}
             </div>
 
-            <div role="tabpanel" className="tab-pane" id="groups-membership">
+            <div role="tabpanel" className="tab-pane fade" id="groups-membership">
               {this.state.user.groups.map(function (group) {
                 return (<GroupIndexItem key={group.id} group={group} />);
                 })}
             </div>
-            
+
           </div>
         </div>
 

@@ -63,7 +63,7 @@ var GroupDetail = React.createClass({
 
             <div className="tab-content">
 
-              <div role="tabpanel" className="tab-pane active" id="group-details">
+              <div role="tabpanel" className="tab-pane active fade in" id="group-details">
                 <div className="detail paper-box">
                   {['title', 'description', 'location'].map(function (attr) {
                     return <p key={attr}>{attr}: {this.state.group[attr]}</p>
@@ -71,14 +71,14 @@ var GroupDetail = React.createClass({
                 </div>
               </div>
 
-              <div role="tabpanel" className="tab-pane" id="events-in-group">
+              <div role="tabpanel" className="tab-pane fade" id="events-in-group">
                 {this.state.group.events.map(function (event) {
                   return (<EventIndexItem key={event.id} event={event}
                     group={this.state.group} />);
                   }.bind(this))}
               </div>
 
-              <div role="tabpanel" className="tab-pane" id="group-members">
+              <div role="tabpanel" className="tab-pane fade" id="group-members">
                 {this.state.group.users.map(function (user) {
                   return (<UserIndexItem key={user.id} user={user}
                     group={this.state.group} />);
