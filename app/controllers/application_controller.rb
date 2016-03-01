@@ -26,6 +26,6 @@ class ApplicationController < ActionController::Base
   end
 
   def require_sign_in!
-    render json: "Error", status: 401 unless signed_in?
+    render json: "Cannot access this page unless signed in!", status: 401 unless signed_in?
   end
 end

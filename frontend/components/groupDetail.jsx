@@ -4,6 +4,8 @@ var ApiUtil = require('../util/api_util');
 var UserIndexItem = require('./userIndexItem');
 var EventIndexItem = require('./eventIndexItem');
 var GroupHeader = require('./groupHeader');
+var History = require('react-router').History;
+var Link = require('react-router').Link;
 
 var GroupDetail = React.createClass({
 
@@ -32,14 +34,24 @@ var GroupDetail = React.createClass({
       this.setState(this.getStateFromStore());
     },
 
+    _goToCreateForm: function () {
+      this.props.history.pushState(this.state.group, 'eventForm', {});
+    },
+
     render: function () {
       if (this.state.group === undefined) { return <div></div>; }
       if (this.state.group.users === undefined) { return <div></div>; }
       if (this.state.group.events === undefined) { return <div></div>; }
 
       return (
-        <div>
+        <div className="text-center">
           <GroupHeader group={this.state.group} />
+          <br />
+
+          <form onSubmit={this._goToCreateForm}>
+            <button type="submit" className="btn btn-default">Create an event new!</button>
+          </form>
+
           <div className="paper-box">
             <div>
               <ul className="nav nav-tabs" role="tablist">
@@ -72,7 +84,7 @@ var GroupDetail = React.createClass({
                     group={this.state.group} />);
                   }.bind(this))}
               </div>
-              
+
             </div>
           </div>
         </div>

@@ -37,7 +37,7 @@ var EventDetail = React.createClass({
     if (this.state.event.users === undefined) { return <div></div>; }
 
     return (
-      <div>
+      <div className="text-center">
         <GroupHeader group={this.state.event.group} />
         <div className="paper-box">
           <div>

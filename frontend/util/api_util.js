@@ -14,6 +14,18 @@ ApiUtil = {
     });
   },
 
+  createEvent: function (event, callback) {
+    $.ajax({
+      url: "api/events",
+      method: "POST",
+      data: {event: event},
+      success: function (resp) {
+        ApiActions.receiveSingleEvent(resp);
+        callback(resp.id);
+      }
+    });
+  },
+
   fetchUsers: function () {
     var options = {
       url: "api/users",

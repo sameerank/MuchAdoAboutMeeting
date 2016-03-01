@@ -3,31 +3,36 @@ var ApiUtil = require('../util/api_util');
 var History = require('react-router').History;
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
-var GroupForm = React.createClass({
+var EventForm = React.createClass({
 
   mixins: [LinkedStateMixin, History],
 
-  blankAttrs: {
-    title: '',
-    description: '',
-    location: '',
-    organizer_id: ''
+  blankAttrs: function () {
+    return {
+      title: '',
+      description: '',
+      start_time: '',
+      end_time: '',
+      location: '',
+      host_id: '',
+      group_id: this.props
+    };
   },
 
   getInitialState: function () {
     return this.blankAttrs;
   },
 
-  _createGroup: function (event) {
+  createEvent: function (event) {
     event.preventDefault();
-    var group = {};
+    var event = {};
 
     Object.keys(this.state).forEach(function (key) {
-          group[key] = this.state[key];
+          event[key] = this.state[key];
         }.bind(this));
 
-    ApiUtil.createGroup(group, function (id) {
-      this.props.history.pushState(null, "group/" + id, {});
+    ApiUtil.createEvent(event, function (id) {
+      this.props.history.pushState(null, "event/" + id, {});
     }.bind(this));
 
     this.setState(this.blankAttrs);
@@ -38,7 +43,7 @@ var GroupForm = React.createClass({
       <div className="container">
         <div className="row">
           <div className='col-sm-6'>
-            <form onSubmit={this._createGroup}>
+            <form onSubmit={this.createEvent}>
               <div className="form-group">
                 <label>Title</label>
                 <input type="text" className="form-control" placeholder="Title"
@@ -55,12 +60,17 @@ var GroupForm = React.createClass({
                   valueLink={this.linkState("location")} />
               </div>
               <div className="form-group">
-                <label>Banner URL</label>
-                <input type="text" className="form-control" placeholder="Banner URL"
-                  valueLink={this.linkState("banner_url")} />
+                <label>Start time</label>
+                <textarea rows="7" className="form-control" placeholder="Start time"
+                  valueLink={this.linkState("start_time")} />
+              </div>
+              <div className="form-group">
+                <label>End time</label>
+                <input type="text" className="form-control" placeholder="End time"
+                  valueLink={this.linkState("end_time")} />
               </div>
 
-              <button type="submit" className="btn btn-primary">Createth the group!</button>
+              <button type="submit" className="btn btn-default">Createth the event!</button>
             </form>
           </div>
         </div>
@@ -69,4 +79,4 @@ var GroupForm = React.createClass({
   }
 });
 
-module.exports = GroupForm;
+module.exports = EventForm;

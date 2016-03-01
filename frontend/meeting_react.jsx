@@ -11,6 +11,7 @@ var UsersIndex = require('./components/usersIndex');
 var UserDetail = require('./components/userDetail');
 var EventsIndex = require('./components/eventsIndex');
 var EventDetail = require('./components/eventDetail');
+var EventForm = require('./components/eventForm');
 var GroupsIndex = require('./components/groupsIndex');
 var GroupDetail = require('./components/groupDetail');
 var GroupForm = require('./components/groupForm');
@@ -21,8 +22,9 @@ var routes = (
   <Route path="/" component={App}>
     <IndexRoute component={LandingPage}/>
     <Route path="event/:eventId" component={EventDetail} />
+    <Route path="eventForm" component={GroupForm} />
     <Route path="group/:groupId" component={GroupDetail} />
-    <Route path="groupForm" component={GroupForm} />
+    <Route path="groupForm" component={EventForm} />
     <Route path="user/:userId" component={UserDetail} />
   </Route>
 );

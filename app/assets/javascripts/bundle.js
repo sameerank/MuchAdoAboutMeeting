@@ -57,18 +57,20 @@
 	var UserDetail = __webpack_require__(238);
 	var EventsIndex = __webpack_require__(239);
 	var EventDetail = __webpack_require__(243);
-	var GroupsIndex = __webpack_require__(246);
-	var GroupDetail = __webpack_require__(248);
-	var GroupForm = __webpack_require__(249);
-	var LandingPage = __webpack_require__(254);
+	var EventForm = __webpack_require__(246);
+	var GroupsIndex = __webpack_require__(251);
+	var GroupDetail = __webpack_require__(253);
+	var GroupForm = __webpack_require__(254);
+	var LandingPage = __webpack_require__(255);
 	
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
 	  React.createElement(IndexRoute, { component: LandingPage }),
 	  React.createElement(Route, { path: 'event/:eventId', component: EventDetail }),
+	  React.createElement(Route, { path: 'eventForm', component: GroupForm }),
 	  React.createElement(Route, { path: 'group/:groupId', component: GroupDetail }),
-	  React.createElement(Route, { path: 'groupForm', component: GroupForm }),
+	  React.createElement(Route, { path: 'groupForm', component: EventForm }),
 	  React.createElement(Route, { path: 'user/:userId', component: UserDetail })
 	);
 	
@@ -31363,6 +31365,18 @@
 	    });
 	  },
 	
+	  createEvent: function (event, callback) {
+	    $.ajax({
+	      url: "api/events",
+	      method: "POST",
+	      data: { event: event },
+	      success: function (resp) {
+	        ApiActions.receiveSingleEvent(resp);
+	        callback(resp.id);
+	      }
+	    });
+	  },
+	
 	  fetchUsers: function () {
 	    var options = {
 	      url: "api/users",
@@ -31905,7 +31919,7 @@
 	
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'text-center' },
 	      React.createElement(GroupHeader, { group: this.state.event.group }),
 	      React.createElement(
 	        'div',
@@ -32040,275 +32054,42 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var GroupStore = __webpack_require__(247);
-	var ApiUtil = __webpack_require__(233);
-	var GroupIndexItem = __webpack_require__(242);
-	
-	var GroupsIndex = React.createClass({
-	  displayName: 'GroupsIndex',
-	
-	  getInitialState: function () {
-	    return {
-	      groups: GroupStore.all()
-	    };
-	  },
-	
-	  componentDidMount: function () {
-	    this.groupListener = GroupStore.addListener(this._onChange);
-	    ApiUtil.fetchGroups();
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.groupListener.remove();
-	  },
-	
-	  _onChange: function () {
-	    this.setState({
-	      groups: GroupStore.all()
-	    });
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'section',
-	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'container group-index' },
-	        React.createElement(
-	          'div',
-	          { className: 'row no-gutters' },
-	          this.state.groups.map(function (group) {
-	            return React.createElement(GroupIndexItem, { key: group.id, group: group });
-	          })
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = GroupsIndex;
-
-/***/ },
-/* 247 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Store = __webpack_require__(212).Store;
-	var AppDispatcher = __webpack_require__(230);
-	var _groups = {};
-	var GroupStore = new Store(AppDispatcher);
-	
-	GroupStore.all = function () {
-	  var groups = [];
-	  for (var id in _groups) {
-	    groups.push(_groups[id]);
-	  }
-	  return groups;
-	};
-	
-	GroupStore.find = function (id) {
-	  return _groups[id];
-	};
-	
-	var resetGroups = function (groups) {
-	  _groups = {};
-	  groups.forEach(function (group) {
-	    _groups[group.id] = group;
-	  });
-	};
-	
-	var resetGroup = function (group) {
-	  _groups[group.id] = group;
-	};
-	
-	GroupStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case GroupConstants.GROUPS_RECEIVED:
-	      resetGroups(payload.groups);
-	      GroupStore.__emitChange();
-	      break;
-	    case GroupConstants.GROUP_RECEIVED:
-	      resetGroup(payload.group);
-	      GroupStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	module.exports = GroupStore;
-
-/***/ },
-/* 248 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var GroupStore = __webpack_require__(247);
-	var ApiUtil = __webpack_require__(233);
-	var UserIndexItem = __webpack_require__(244);
-	var EventIndexItem = __webpack_require__(241);
-	var GroupHeader = __webpack_require__(245);
-	
-	var GroupDetail = React.createClass({
-	  displayName: 'GroupDetail',
-	
-	
-	  getInitialState: function () {
-	    return this.getStateFromStore();
-	  },
-	
-	  getStateFromStore: function () {
-	    return { group: GroupStore.find(parseInt(this.props.params.groupId)) };
-	  },
-	
-	  componentWillReceiveProps: function (newProps) {
-	    ApiUtil.fetchGroup(parseInt(newProps.params.groupId));
-	  },
-	
-	  componentDidMount: function () {
-	    this.groupListener = GroupStore.addListener(this._onChange);
-	    ApiUtil.fetchGroup(parseInt(this.props.params.groupId));
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.groupListener.remove();
-	  },
-	
-	  _onChange: function () {
-	    this.setState(this.getStateFromStore());
-	  },
-	
-	  render: function () {
-	    if (this.state.group === undefined) {
-	      return React.createElement('div', null);
-	    }
-	    if (this.state.group.users === undefined) {
-	      return React.createElement('div', null);
-	    }
-	    if (this.state.group.events === undefined) {
-	      return React.createElement('div', null);
-	    }
-	
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(GroupHeader, { group: this.state.group }),
-	      React.createElement(
-	        'div',
-	        { className: 'paper-box' },
-	        React.createElement(
-	          'div',
-	          null,
-	          React.createElement(
-	            'ul',
-	            { className: 'nav nav-tabs', role: 'tablist' },
-	            React.createElement(
-	              'li',
-	              { role: 'presentation', className: 'active' },
-	              React.createElement(
-	                'a',
-	                { href: '#group-details', 'aria-controls': 'group-details', role: 'tab', 'data-toggle': 'tab' },
-	                'Group Details'
-	              )
-	            ),
-	            React.createElement(
-	              'li',
-	              { role: 'presentation' },
-	              React.createElement(
-	                'a',
-	                { href: '#events-in-group', 'aria-controls': 'events-in-group', role: 'tab', 'data-toggle': 'tab' },
-	                'Events'
-	              )
-	            ),
-	            React.createElement(
-	              'li',
-	              { role: 'presentation' },
-	              React.createElement(
-	                'a',
-	                { href: '#group-members', 'aria-controls': 'group-members', role: 'tab', 'data-toggle': 'tab' },
-	                'Members'
-	              )
-	            )
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'tab-content' },
-	          React.createElement(
-	            'div',
-	            { role: 'tabpanel', className: 'tab-pane active', id: 'group-details' },
-	            React.createElement(
-	              'div',
-	              { className: 'detail paper-box' },
-	              ['title', 'description', 'location'].map(function (attr) {
-	                return React.createElement(
-	                  'p',
-	                  { key: attr },
-	                  attr,
-	                  ': ',
-	                  this.state.group[attr]
-	                );
-	              }.bind(this))
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { role: 'tabpanel', className: 'tab-pane', id: 'events-in-group' },
-	            this.state.group.events.map(function (event) {
-	              return React.createElement(EventIndexItem, { key: event.id, event: event,
-	                group: this.state.group });
-	            }.bind(this))
-	          ),
-	          React.createElement(
-	            'div',
-	            { role: 'tabpanel', className: 'tab-pane', id: 'group-members' },
-	            this.state.group.users.map(function (user) {
-	              return React.createElement(UserIndexItem, { key: user.id, user: user,
-	                group: this.state.group });
-	            }.bind(this))
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = GroupDetail;
-
-/***/ },
-/* 249 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(233);
 	var History = __webpack_require__(159).History;
-	var LinkedStateMixin = __webpack_require__(250);
+	var LinkedStateMixin = __webpack_require__(247);
 	
-	var GroupForm = React.createClass({
-	  displayName: 'GroupForm',
+	var EventForm = React.createClass({
+	  displayName: 'EventForm',
 	
 	
 	  mixins: [LinkedStateMixin, History],
 	
-	  blankAttrs: {
-	    title: '',
-	    description: '',
-	    location: '',
-	    organizer_id: ''
+	  blankAttrs: function () {
+	    return {
+	      title: '',
+	      description: '',
+	      start_time: '',
+	      end_time: '',
+	      location: '',
+	      host_id: '',
+	      group_id: this.props
+	    };
 	  },
 	
 	  getInitialState: function () {
 	    return this.blankAttrs;
 	  },
 	
-	  createGroup: function (event) {
+	  createEvent: function (event) {
 	    event.preventDefault();
-	    var group = {};
+	    var event = {};
 	
 	    Object.keys(this.state).forEach(function (key) {
-	      group[key] = this.state[key];
+	      event[key] = this.state[key];
 	    }.bind(this));
 	
-	    ApiUtil.createGroup(group, function (id) {
-	      this.props.history.pushState(null, "group/" + id, {});
+	    ApiUtil.createEvent(event, function (id) {
+	      this.props.history.pushState(null, "event/" + id, {});
 	    }.bind(this));
 	
 	    this.setState(this.blankAttrs);
@@ -32316,71 +32097,94 @@
 	
 	  render: function () {
 	    return React.createElement(
-	      'form',
-	      { onSubmit: this.createGroup },
+	      'div',
+	      { className: 'container' },
 	      React.createElement(
 	        'div',
-	        { className: 'form-group' },
+	        { className: 'row' },
 	        React.createElement(
-	          'label',
-	          null,
-	          'Title'
-	        ),
-	        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Title',
-	          valueLink: this.linkState("title") })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'form-group' },
-	        React.createElement(
-	          'label',
-	          null,
-	          'Description'
-	        ),
-	        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Description',
-	          valueLink: this.linkState("description") })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'form-group' },
-	        React.createElement(
-	          'label',
-	          null,
-	          'Location'
-	        ),
-	        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Location',
-	          valueLink: this.linkState("location") })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'form-group' },
-	        React.createElement(
-	          'label',
-	          null,
-	          'Banner URL'
-	        ),
-	        React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Banner URL',
-	          valueLink: this.linkState("banner_url") })
-	      ),
-	      React.createElement(
-	        'button',
-	        { type: 'submit', className: 'btn btn-default' },
-	        'Createth the group!'
+	          'div',
+	          { className: 'col-sm-6' },
+	          React.createElement(
+	            'form',
+	            { onSubmit: this.createEvent },
+	            React.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              React.createElement(
+	                'label',
+	                null,
+	                'Title'
+	              ),
+	              React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Title',
+	                valueLink: this.linkState("title") })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              React.createElement(
+	                'label',
+	                null,
+	                'Description'
+	              ),
+	              React.createElement('textarea', { rows: '7', className: 'form-control', placeholder: 'Description',
+	                valueLink: this.linkState("description") })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              React.createElement(
+	                'label',
+	                null,
+	                'Location'
+	              ),
+	              React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Location',
+	                valueLink: this.linkState("location") })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              React.createElement(
+	                'label',
+	                null,
+	                'Start time'
+	              ),
+	              React.createElement('textarea', { rows: '7', className: 'form-control', placeholder: 'Start time',
+	                valueLink: this.linkState("start_time") })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              React.createElement(
+	                'label',
+	                null,
+	                'End time'
+	              ),
+	              React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'End time',
+	                valueLink: this.linkState("end_time") })
+	            ),
+	            React.createElement(
+	              'button',
+	              { type: 'submit', className: 'btn btn-default' },
+	              'Createth the event!'
+	            )
+	          )
+	        )
 	      )
 	    );
 	  }
 	});
 	
-	module.exports = GroupForm;
+	module.exports = EventForm;
 
 /***/ },
-/* 250 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(251);
+	module.exports = __webpack_require__(248);
 
 /***/ },
-/* 251 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32397,8 +32201,8 @@
 	
 	'use strict';
 	
-	var ReactLink = __webpack_require__(252);
-	var ReactStateSetters = __webpack_require__(253);
+	var ReactLink = __webpack_require__(249);
+	var ReactStateSetters = __webpack_require__(250);
 	
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -32421,7 +32225,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 252 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32495,7 +32299,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 253 */
+/* 250 */
 /***/ function(module, exports) {
 
 	/**
@@ -32604,13 +32408,379 @@
 	module.exports = ReactStateSetters;
 
 /***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var GroupStore = __webpack_require__(252);
+	var ApiUtil = __webpack_require__(233);
+	var GroupIndexItem = __webpack_require__(242);
+	
+	var GroupsIndex = React.createClass({
+	  displayName: 'GroupsIndex',
+	
+	  getInitialState: function () {
+	    return {
+	      groups: GroupStore.all()
+	    };
+	  },
+	
+	  componentDidMount: function () {
+	    this.groupListener = GroupStore.addListener(this._onChange);
+	    ApiUtil.fetchGroups();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.groupListener.remove();
+	  },
+	
+	  _onChange: function () {
+	    this.setState({
+	      groups: GroupStore.all()
+	    });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'section',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'container group-index' },
+	        React.createElement(
+	          'div',
+	          { className: 'row no-gutters' },
+	          this.state.groups.map(function (group) {
+	            return React.createElement(GroupIndexItem, { key: group.id, group: group });
+	          })
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = GroupsIndex;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(212).Store;
+	var AppDispatcher = __webpack_require__(230);
+	var _groups = {};
+	var GroupStore = new Store(AppDispatcher);
+	
+	GroupStore.all = function () {
+	  var groups = [];
+	  for (var id in _groups) {
+	    groups.push(_groups[id]);
+	  }
+	  return groups;
+	};
+	
+	GroupStore.find = function (id) {
+	  return _groups[id];
+	};
+	
+	var resetGroups = function (groups) {
+	  _groups = {};
+	  groups.forEach(function (group) {
+	    _groups[group.id] = group;
+	  });
+	};
+	
+	var resetGroup = function (group) {
+	  _groups[group.id] = group;
+	};
+	
+	GroupStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case GroupConstants.GROUPS_RECEIVED:
+	      resetGroups(payload.groups);
+	      GroupStore.__emitChange();
+	      break;
+	    case GroupConstants.GROUP_RECEIVED:
+	      resetGroup(payload.group);
+	      GroupStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = GroupStore;
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var GroupStore = __webpack_require__(252);
+	var ApiUtil = __webpack_require__(233);
+	var UserIndexItem = __webpack_require__(244);
+	var EventIndexItem = __webpack_require__(241);
+	var GroupHeader = __webpack_require__(245);
+	var History = __webpack_require__(159).History;
+	var Link = __webpack_require__(159).Link;
+	
+	var GroupDetail = React.createClass({
+	  displayName: 'GroupDetail',
+	
+	
+	  getInitialState: function () {
+	    return this.getStateFromStore();
+	  },
+	
+	  getStateFromStore: function () {
+	    return { group: GroupStore.find(parseInt(this.props.params.groupId)) };
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {
+	    ApiUtil.fetchGroup(parseInt(newProps.params.groupId));
+	  },
+	
+	  componentDidMount: function () {
+	    this.groupListener = GroupStore.addListener(this._onChange);
+	    ApiUtil.fetchGroup(parseInt(this.props.params.groupId));
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.groupListener.remove();
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
+	  },
+	
+	  _goToCreateForm: function () {
+	    this.props.history.pushState(this.state.group, 'eventForm', {});
+	  },
+	
+	  render: function () {
+	    if (this.state.group === undefined) {
+	      return React.createElement('div', null);
+	    }
+	    if (this.state.group.users === undefined) {
+	      return React.createElement('div', null);
+	    }
+	    if (this.state.group.events === undefined) {
+	      return React.createElement('div', null);
+	    }
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'text-center' },
+	      React.createElement(GroupHeader, { group: this.state.group }),
+	      React.createElement('br', null),
+	      React.createElement(
+	        'form',
+	        { onSubmit: this._goToCreateForm },
+	        React.createElement(
+	          'button',
+	          { type: 'submit', className: 'btn btn-default' },
+	          'Create an event new!'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'paper-box' },
+	        React.createElement(
+	          'div',
+	          null,
+	          React.createElement(
+	            'ul',
+	            { className: 'nav nav-tabs', role: 'tablist' },
+	            React.createElement(
+	              'li',
+	              { role: 'presentation', className: 'active' },
+	              React.createElement(
+	                'a',
+	                { href: '#group-details', 'aria-controls': 'group-details', role: 'tab', 'data-toggle': 'tab' },
+	                'Group Details'
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              { role: 'presentation' },
+	              React.createElement(
+	                'a',
+	                { href: '#events-in-group', 'aria-controls': 'events-in-group', role: 'tab', 'data-toggle': 'tab' },
+	                'Events'
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              { role: 'presentation' },
+	              React.createElement(
+	                'a',
+	                { href: '#group-members', 'aria-controls': 'group-members', role: 'tab', 'data-toggle': 'tab' },
+	                'Members'
+	              )
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'tab-content' },
+	          React.createElement(
+	            'div',
+	            { role: 'tabpanel', className: 'tab-pane active', id: 'group-details' },
+	            React.createElement(
+	              'div',
+	              { className: 'detail paper-box' },
+	              ['title', 'description', 'location'].map(function (attr) {
+	                return React.createElement(
+	                  'p',
+	                  { key: attr },
+	                  attr,
+	                  ': ',
+	                  this.state.group[attr]
+	                );
+	              }.bind(this))
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { role: 'tabpanel', className: 'tab-pane', id: 'events-in-group' },
+	            this.state.group.events.map(function (event) {
+	              return React.createElement(EventIndexItem, { key: event.id, event: event,
+	                group: this.state.group });
+	            }.bind(this))
+	          ),
+	          React.createElement(
+	            'div',
+	            { role: 'tabpanel', className: 'tab-pane', id: 'group-members' },
+	            this.state.group.users.map(function (user) {
+	              return React.createElement(UserIndexItem, { key: user.id, user: user,
+	                group: this.state.group });
+	            }.bind(this))
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = GroupDetail;
+
+/***/ },
 /* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var LandingPageHeader = __webpack_require__(255);
+	var ApiUtil = __webpack_require__(233);
+	var History = __webpack_require__(159).History;
+	var LinkedStateMixin = __webpack_require__(247);
+	
+	var GroupForm = React.createClass({
+	  displayName: 'GroupForm',
+	
+	
+	  mixins: [LinkedStateMixin, History],
+	
+	  blankAttrs: {
+	    title: '',
+	    description: '',
+	    location: '',
+	    organizer_id: ''
+	  },
+	
+	  getInitialState: function () {
+	    return this.blankAttrs;
+	  },
+	
+	  _createGroup: function (event) {
+	    event.preventDefault();
+	    var group = {};
+	
+	    Object.keys(this.state).forEach(function (key) {
+	      group[key] = this.state[key];
+	    }.bind(this));
+	
+	    ApiUtil.createGroup(group, function (id) {
+	      this.props.history.pushState(null, "group/" + id, {});
+	    }.bind(this));
+	
+	    this.setState(this.blankAttrs);
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'container' },
+	      React.createElement(
+	        'div',
+	        { className: 'row' },
+	        React.createElement(
+	          'div',
+	          { className: 'col-sm-6' },
+	          React.createElement(
+	            'form',
+	            { onSubmit: this._createGroup },
+	            React.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              React.createElement(
+	                'label',
+	                null,
+	                'Title'
+	              ),
+	              React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Title',
+	                valueLink: this.linkState("title") })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              React.createElement(
+	                'label',
+	                null,
+	                'Description'
+	              ),
+	              React.createElement('textarea', { rows: '7', className: 'form-control', placeholder: 'Description',
+	                valueLink: this.linkState("description") })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              React.createElement(
+	                'label',
+	                null,
+	                'Location'
+	              ),
+	              React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Location',
+	                valueLink: this.linkState("location") })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              React.createElement(
+	                'label',
+	                null,
+	                'Banner URL'
+	              ),
+	              React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Banner URL',
+	                valueLink: this.linkState("banner_url") })
+	            ),
+	            React.createElement(
+	              'button',
+	              { type: 'submit', className: 'btn btn-primary' },
+	              'Createth the group!'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = GroupForm;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var LandingPageHeader = __webpack_require__(256);
 	var EventsIndex = __webpack_require__(239);
-	var GroupsIndex = __webpack_require__(246);
+	var GroupsIndex = __webpack_require__(251);
 	
 	var LandingPage = React.createClass({
 	  displayName: 'LandingPage',
@@ -32638,7 +32808,7 @@
 	module.exports = LandingPage;
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);

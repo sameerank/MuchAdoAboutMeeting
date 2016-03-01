@@ -24,6 +24,22 @@ class Api::GroupsController < ApplicationController
 
   end
 
+  def update
+    @group = Group.find_by(id: params[:id])
+    if @group.update_attributes(group_params)
+      render :show
+    else
+      render json: @group.errors.full_messages, status: 422
+    end
+  end
+
+
+  def destroy
+    @group = Group.find_by(id: params[:id])
+    @group.destroy
+    render :index
+  end
+
   private
   def group_params
     params.require(:group).permit(:title, :description, :location, :banner_url, :organizer_id)
