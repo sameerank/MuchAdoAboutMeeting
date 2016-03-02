@@ -14,16 +14,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def update
-    @user = User.find_by(id: params[:id])
-    if @user.update_attributes(user_params)
-      render :show
-    else
-      render json: @user.errors.full_messages, status: 422
-    end
-  end
-
-
   def destroy
     @user = User.find_by(id: params[:id])
     @user.destroy

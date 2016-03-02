@@ -4,6 +4,7 @@ var ApiUtil = require('../util/api_util');
 var eventsIndex = require('./eventsIndex');
 var EventIndexItem = require('./eventIndexItem');
 var GroupIndexItem = require('./groupIndexItem');
+var History = require('react-router').History;
 
 var UserDetail = React.createClass({
 
@@ -32,6 +33,20 @@ var UserDetail = React.createClass({
     this.setState(this.getStateFromStore());
   },
 
+  _toUserEditForm: function () {
+    this.props.history.pushState(this.state.user, 'userEditForm', {});
+  },
+
+  _allowEdit: function () {
+    if (window.current_user === this.state.user.id) {
+      return (
+        <form onSubmit={this._toUserEditForm}>
+          <button type="submit" className="btn btn-default">Edit your information.</button>
+        </form>
+      );
+    }
+  },
+
   render: function () {
     if (this.state.user === undefined) { return <div></div>; }
 
@@ -48,6 +63,7 @@ var UserDetail = React.createClass({
 
             <div role="tabpanel" className="tab-pane active fade in" id="profile">
               <div className="detail paper-box">
+                {this._allowEdit()}
                 <img src={this.state.user.avatar_url} />
                 {['name', 'location', 'gender', 'bio'].map(function (attr) {
                   return <p key={attr}>{attr}: {this.state.user[attr]}</p>;

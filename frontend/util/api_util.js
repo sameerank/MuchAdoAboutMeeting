@@ -2,6 +2,19 @@ var ApiActions = require('../actions/api_actions');
 
 ApiUtil = {
 
+
+  updateUser: function (user, callback) {
+    $.ajax({
+      url: "api/users/" + user.id,
+      method: "PATCH",
+      data: {user: user},
+      success: function (resp) {
+        ApiActions.receiveSingleUser(resp);
+        callback(resp.id);
+      }
+    });
+  },
+
   createGroup: function (group, callback) {
     $.ajax({
       url: "api/groups",

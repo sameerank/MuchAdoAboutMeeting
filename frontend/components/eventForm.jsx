@@ -26,8 +26,8 @@ var EventForm = React.createClass({
     return this.blankAttrs();
   },
 
-  createEvent: function (event) {
-    event.preventDefault();
+  _createEvent: function (e) {
+    e.preventDefault();
     var event = {};
 
     Object.keys(this.state).forEach(function (key) {
@@ -41,11 +41,11 @@ var EventForm = React.createClass({
     this.setState(this.blankAttrs);
   },
 
-  handleDateChangeStartTime: function (dateTime) {
+  _handleDateChangeStartTime: function (dateTime) {
     this.setState({ start_time: moment(parseInt(dateTime)).format('MM-DD-YYYY HH:mm')});
   },
 
-  handleDateChangeEndTime: function (dateTime) {
+  _handleDateChangeEndTime: function (dateTime) {
     this.setState({ end_time: moment(parseInt(dateTime)).format('MM-DD-YYYY HH:mm')});
   },
 
@@ -54,7 +54,7 @@ var EventForm = React.createClass({
       <div className="container">
         <div className="row">
           <div className='col-sm-6'>
-            <form onSubmit={this.createEvent}>
+            <form onSubmit={this._createEvent}>
               <div className="form-group">
                 <label>Title</label>
                 <input type="text" className="form-control" placeholder="Title"
@@ -74,13 +74,13 @@ var EventForm = React.createClass({
                 <label>Start time</label>
                 <DateTimeField
                   defaultText="Start time"
-                  onChange={this.handleDateChangeStartTime} />
+                  onChange={this._handleDateChangeStartTime} />
               </div>
               <div className="form-group">
                 <label>End time</label>
                 <DateTimeField
                   defaultText="End time"
-                  onChange={this.handleDateChangeEndTime} />
+                  onChange={this._handleDateChangeEndTime} />
               </div>
 
 

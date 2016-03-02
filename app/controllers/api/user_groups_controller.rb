@@ -1,5 +1,5 @@
 class Api::UserGroupsController < ApplicationController
-  # before_action :require_sign_in!, only: [:update, :create, :delete]
+  before_action :require_sign_in!
 
   def create
     @user_group = UserGroup.new(group_params)
@@ -10,7 +10,6 @@ class Api::UserGroupsController < ApplicationController
     else
       render json: @user_group.errors.full_messages, status: 422
     end
-
   end
 
 

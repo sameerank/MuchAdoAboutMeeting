@@ -1,8 +1,34 @@
 var React = require('react');
 var History = require('react-router').History;
+var UserStore = require('../stores/user');
 
 var NavBar = React.createClass({
   mixins: [History],
+
+  getInitialState: function () {
+    return this.getStateFromStore();
+  },
+
+  getStateFromStore: function () {
+    return { current_user: UserStore.find(parseInt(window.current_user)) };
+  },
+
+  componentWillReceiveProps: function (newProps) {
+    ApiUtil.fetchUser(parseInt(window.current_user));
+  },
+
+  componentDidMount: function () {
+    this.eventListener = UserStore.addListener(this._onChange);
+    ApiUtil.fetchUser(parseInt(window.current_user));
+  },
+
+  componentWillUnmount: function () {
+    this.eventListener.remove();
+  },
+
+  _onChange: function () {
+    this.setState(this.getStateFromStore());
+  },
 
   _logout: function () {
     ApiUtil.logout();
@@ -12,8 +38,18 @@ var NavBar = React.createClass({
     this.history.pushState(null, 'groupForm', {});
   },
 
+  _toProfile: function (event) {
+    event.preventDefault();
+    this.history.pushState(null, 'user/' + this.state.current_user.id, {});
+  },
+
+  _toUserEditForm: function (event) {
+    event.preventDefault();
+    this.history.pushState(this.state.current_user, 'userEditForm', {});
+  },
+
   render: function () {
-    var signUpButtonifNotLoggedIn = function () {
+    var signUpOrProfileAccordingToLogInStatus = function () {
       if (window.current_user === undefined) {
         return (
           <li>
@@ -22,8 +58,23 @@ var NavBar = React.createClass({
             </form>
           </li>
         );
+      } else {
+        if (this.state.current_user === undefined) {
+          return <li></li>;
+        } else {
+          return (
+            <li class="dropdown">
+              <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{this.state.current_user.email} <span className="caret"></span></a>
+              <ul className="dropdown-menu">
+                <li><a href="#" onClick={this._toProfile}>View Thyne Profile</a></li>
+                <li><a href="#" onClick={this._toUserEditForm}>Edit Thyne Profile</a></li>
+                <li><a href="#" onClick={this._logout}>Logeth Out</a></li>
+              </ul>
+            </li>
+          );
+        }
       }
-    };
+    }.bind(this);
 
     var logInButtonAccordingToLogInStatus = function () {
       if (window.current_user === undefined) {
@@ -35,7 +86,6 @@ var NavBar = React.createClass({
       } else {
         return (
           <li>
-            <a href="#" onClick={this._logout}>Logeth Out</a>
           </li>
         );
       }
@@ -50,25 +100,22 @@ var NavBar = React.createClass({
           <div className="navbar-collapse collapse">
             <ul className="nav navbar-nav navbar-left">
               <li>
-                <a href="#"><b>Findeth</b> a meeting group</a>
+                <a onClick={this._toGroupForm} className="clickable"><b>Starteth</b> a group</a>
               </li>
-              <li>
-                <a onClick={this._toGroupForm} className="clickable"><b>Starteth</b> a meeting group</a>
-              </li>
-            </ul>
-            <ul className="nav navbar-nav navbar-right">
               <li>
                 <form className="navbar-form navbar-left" role="search">
                   <div className="form-group">
-                    <input type="text" className="form-control" placeholder="Search"></input>
+                    <input type="text" className="form-control" placeholder="Findeth a group"></input>
                   </div>
                   <button type="submit" className="btn btn-default">
                     <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
                   </button>
                 </form>
               </li>
+            </ul>
+            <ul className="nav navbar-nav navbar-right">
               {logInButtonAccordingToLogInStatus()}
-              {signUpButtonifNotLoggedIn()}
+              {signUpOrProfileAccordingToLogInStatus()}
             </ul>
           </div>
         </div>
