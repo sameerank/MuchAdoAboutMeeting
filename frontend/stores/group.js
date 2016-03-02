@@ -15,6 +15,13 @@ GroupStore.find = function (id) {
   return _groups[id];
 };
 
+GroupStore.findBySearch = function (searchQuery) {
+  return this.all().filter(function (group) {
+      var stringToSearch = group.title + group.description + group.location;
+      return (stringToSearch.indexOf(searchQuery) > -1);
+    }.bind(this));
+};
+
 var resetGroups = function (groups) {
   _groups = {};
   groups.forEach(function (group) {

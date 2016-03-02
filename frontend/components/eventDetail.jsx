@@ -4,6 +4,7 @@ var ApiUtil = require('../util/api_util');
 var UserIndexItem = require('./userIndexItem');
 var GroupHeader = require('./groupHeader');
 
+var JoinEventToggle = require('./joinEventToggle');
 
 var EventDetail = React.createClass({
 
@@ -39,6 +40,9 @@ var EventDetail = React.createClass({
     return (
       <div className="text-center">
         <GroupHeader group={this.state.event.group} />
+
+        <JoinEventToggle event={this.state.event} />
+
         <div className="paper-box">
           <div>
             <ul className="nav nav-tabs" role="tablist">

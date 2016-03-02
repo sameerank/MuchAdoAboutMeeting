@@ -6,7 +6,7 @@ class Api::UserGroupsController < ApplicationController
     @user_group.user_id = current_user.id
 
     if @user_group.save
-      render :show
+      render json: @user_group, status: 200
     else
       render json: @user_group.errors.full_messages, status: 422
     end
@@ -16,7 +16,7 @@ class Api::UserGroupsController < ApplicationController
   def destroy
     @user_group = UserGroup.find_by(id: params[:id])
     @user_group.destroy
-    render :index
+    render json: @user_group, status: 200
   end
 
   private

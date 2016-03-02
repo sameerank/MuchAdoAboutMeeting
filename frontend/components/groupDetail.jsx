@@ -6,6 +6,8 @@ var EventIndexItem = require('./eventIndexItem');
 var GroupHeader = require('./groupHeader');
 var History = require('react-router').History;
 
+var JoinGroupToggle = require('./joinGroupToggle');
+
 var GroupDetail = React.createClass({
 
     getInitialState: function () {
@@ -42,33 +44,12 @@ var GroupDetail = React.createClass({
       if (this.state.group.users === undefined) { return <div></div>; }
       if (this.state.group.events === undefined) { return <div></div>; }
 
-      var joinButton= function () {
-        group_member_ids = this.state.group.users.map(function (user) {
-          return user.id;
-        });
-
-        if (group_member_ids.indexOf(window.current_user) > -1) {
-          return (
-            <form>
-              <button type="submit" className="btn btn-default">Leaveth group!</button>
-            </form>
-          );
-        } else {
-          return (
-            <form>
-              <button type="submit" className="btn btn-default">Joineth group!</button>
-            </form>
-          );
-        }
-      }.bind(this);
-
-
       return (
         <div className="text-center">
           <GroupHeader group={this.state.group} />
           <br />
 
-          {joinButton()}
+          <JoinGroupToggle group={this.state.group} />
 
           <form onSubmit={this._goToCreateEventForm}>
             <button type="submit" className="btn btn-default">Create an event new!</button>

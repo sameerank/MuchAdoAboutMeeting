@@ -2,41 +2,110 @@ var ApiActions = require('../actions/api_actions');
 
 ApiUtil = {
 
+  createUserEvent: function (user_event) {
+    var options = {
+      url: "api/user_events",
+      method: "POST",
+      data: {user_event: user_event},
+      success: function (resp) {
+        this.fetchEvent(resp.event_id);
+      }.bind(this),
+      error: function (resp) {
+        console.log(resp);
+      }
+    };
+    $.ajax(options);
+  },
+
+  deleteUserEvent: function (user_event) {
+    var options = {
+      url: "api/user_events/" + user_event.id,
+      method: "DELETE",
+      success: function (resp) {
+        this.fetchEvent(resp.event_id);
+      }.bind(this),
+      error: function (resp) {
+        console.log(resp);
+      }
+    };
+    $.ajax(options);
+  },
+
+  createUserGroup: function (user_group) {
+    var options = {
+      url: "api/user_groups",
+      method: "POST",
+      data: {user_group: user_group},
+      success: function (resp) {
+        this.fetchGroup(resp.group_id);
+      }.bind(this),
+      error: function (resp) {
+        console.log(resp);
+      }
+    };
+    $.ajax(options);
+  },
+
+  deleteUserGroup: function (user_group) {
+    var options = {
+      url: "api/user_groups/" + user_group.id,
+      method: "DELETE",
+      success: function (resp) {
+        this.fetchGroup(resp.group_id);
+      }.bind(this),
+      error: function (resp) {
+        console.log(resp);
+      }
+    };
+    $.ajax(options);
+  },
 
   updateUser: function (user, callback) {
-    $.ajax({
+    var options = {
       url: "api/users/" + user.id,
       method: "PATCH",
       data: {user: user},
       success: function (resp) {
         ApiActions.receiveSingleUser(resp);
         callback(resp.id);
+      },
+      error: function (resp) {
+        console.log(resp);
       }
-    });
+    };
+    $.ajax(options);
   },
 
   createGroup: function (group, callback) {
-    $.ajax({
+    var options = {
       url: "api/groups",
       method: "POST",
       data: {group: group},
       success: function (resp) {
         ApiActions.receiveSingleGroup(resp);
         callback(resp.id);
+      },
+      error: function (resp) {
+        console.log(resp);
       }
-    });
+    };
+    $.ajax(options);
   },
 
   createEvent: function (event, callback) {
-    $.ajax({
+    var options = {
       url: "api/events",
       method: "POST",
       data: {event: event},
       success: function (resp) {
         ApiActions.receiveSingleEvent(resp);
         callback(resp.id);
+      },
+      error: function (resp) {
+        console.log(resp);
       }
-    });
+    };
+    $.ajax(options);
   },
 
   fetchUsers: function () {

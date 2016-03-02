@@ -6,7 +6,7 @@ class Api::UserEventsController < ApplicationController
     @user_event.user_id = current_user.id
 
     if @user_event.save
-      render :show
+      render json: @user_event, status: 200
     else
       render json: @user_event.errors.full_messages, status: 422
     end
@@ -16,7 +16,7 @@ class Api::UserEventsController < ApplicationController
   def destroy
     @user_event = UserEvent.find_by(id: params[:id])
     @user_event.destroy
-    render :index
+    render json: @user_event, status: 200
   end
 
   private
