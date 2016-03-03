@@ -1,9 +1,14 @@
 var React = require('react');
 var History = require('react-router').History;
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var UserStore = require('../stores/user');
+var GroupForm = require('./groupForm');
+var UserEditForm = require('./userEditForm');
+var GroupsSearch = require('./groupsSearch');
 
 var NavBar = React.createClass({
-  mixins: [History],
+
+  mixins: [LinkedStateMixin, History],
 
   getInitialState: function () {
     return this.getStateFromStore();
@@ -34,18 +39,13 @@ var NavBar = React.createClass({
     ApiUtil.logout();
   },
 
-  _toGroupForm: function () {
-    this.history.pushState(null, 'groupForm', {});
-  },
-
-  _toProfile: function (event) {
-    event.preventDefault();
+  _toProfile: function (e) {
+    e.preventDefault();
     this.history.pushState(null, 'user/' + this.state.current_user.id, {});
   },
 
-  _toUserEditForm: function (event) {
-    event.preventDefault();
-    this.history.pushState(this.state.current_user, 'userEditForm', {});
+  _toUserEditForm: function () {
+    return <UserEditForm current_user={this.state.current_user} />
   },
 
   render: function () {
@@ -63,11 +63,17 @@ var NavBar = React.createClass({
           return <li></li>;
         } else {
           return (
-            <li class="dropdown">
+            <li className="dropdown">
               <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{this.state.current_user.email} <span className="caret"></span></a>
               <ul className="dropdown-menu">
                 <li><a href="#" onClick={this._toProfile}>View Thyne Profile</a></li>
-                <li><a href="#" onClick={this._toUserEditForm}>Edit Thyne Profile</a></li>
+
+                <li>
+                  <a className="clickable" data-toggle="modal" data-target="#userEditFormModal">
+                    Edit Thyne Profile
+                  </a>
+                </li>
+
                 <li><a href="#" onClick={this._logout}>Logeth Out</a></li>
               </ul>
             </li>
@@ -91,35 +97,92 @@ var NavBar = React.createClass({
       }
     }.bind(this);
 
-    return (
-      <nav className="navbar navbar-default navbar-fixed-top">
-        <div className="container">
-          <a className="navbar-brand" href="#">
-            <img alt="MuchAdoAboutMeeting" src="http://img1.meetupstatic.com/img/94156887029318281691566697/logo.svg" />
-          </a>
-          <div className="navbar-collapse collapse">
-            <ul className="nav navbar-nav navbar-left">
-              <li>
-                <a onClick={this._toGroupForm} className="clickable"><b>Starteth</b> a group</a>
-              </li>
-              <li>
-                <form className="navbar-form navbar-left" role="search">
-                  <div className="form-group">
-                    <input type="text" className="form-control" placeholder="Findeth a group"></input>
+    var modalDivsIfSignedIn = function () {
+      if (this.state.current_user !== undefined) {
+        return (
+          <div>
+            <div className="modal fade" id="userEditFormModal" tabIndex="-1" role="dialog" aria-labelledby="userEditFormModalLabel">
+              <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                  <div className="modal-body">
+                    {this._toUserEditForm()}
                   </div>
-                  <button type="submit" className="btn btn-default">
-                    <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
-                  </button>
-                </form>
-              </li>
-            </ul>
-            <ul className="nav navbar-nav navbar-right">
-              {logInButtonAccordingToLogInStatus()}
-              {signUpOrProfileAccordingToLogInStatus()}
-            </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    }.bind(this);
+
+    return (
+      <div>
+        <nav className="navbar navbar-default navbar-fixed-top">
+          <div className="container">
+            <a className="navbar-brand" href="#">
+              <img alt="MuchAdoAboutMeeting" src="http://img1.meetupstatic.com/img/94156887029318281691566697/logo.svg" />
+            </a>
+            <div className="navbar-collapse collapse">
+              <ul className="nav navbar-nav navbar-left">
+
+                <li>
+                  <a className="clickable" data-toggle="modal" data-target="#createGroupModal">
+                    <b>Starteth</b> a group
+                  </a>
+                </li>
+
+                <li>
+                  <form className="navbar-form navbar-left" role="search">
+                    <div className="form-group">
+                      <input type="text"
+                        className="form-control"
+                        placeholder="Findeth a group"
+                        valueLink={this.linkState("searchQuery")}>
+                      </input>
+                    </div>
+                    <button type="submit"
+                      className="btn btn-default"
+                      data-toggle="modal"
+                      data-target="#searchResultsModal">
+                      <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                  </form>
+                </li>
+
+              </ul>
+              <ul className="nav navbar-nav navbar-right">
+
+                {logInButtonAccordingToLogInStatus()}
+                {signUpOrProfileAccordingToLogInStatus()}
+
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div className="modal fade" id="createGroupModal" tabIndex="-1" role="dialog" aria-labelledby="createGroupModalLabel">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                <GroupForm />
+              </div>
+            </div>
           </div>
         </div>
-      </nav>
+
+        <div className="modal fade" id="searchResultsModal" tabIndex="-1" role="dialog" aria-labelledby="searchResultsModalLabel">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                <GroupsSearch searchQuery={this.state.searchQuery} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {modalDivsIfSignedIn()}
+
+      </div>
     );
   }
 });

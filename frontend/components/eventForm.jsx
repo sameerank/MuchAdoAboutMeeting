@@ -18,7 +18,7 @@ var EventForm = React.createClass({
       end_time: '',
       location: '',
       host_id: window.current_user,
-      group_id: this.props.location.state.id
+      group_id: this.props.group.id
     };
   },
 
@@ -28,6 +28,7 @@ var EventForm = React.createClass({
 
   _createEvent: function (e) {
     e.preventDefault();
+    $('.modal').modal('hide');
     var event = {};
 
     Object.keys(this.state).forEach(function (key) {

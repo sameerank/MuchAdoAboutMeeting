@@ -11,15 +11,17 @@ var GroupForm = React.createClass({
     title: '',
     description: '',
     location: '',
-    organizer_id: ''
+    organizer_id: '',
+    banner_url: ''
   },
 
   getInitialState: function () {
     return this.blankAttrs;
   },
 
-  _createGroup: function (event) {
-    event.preventDefault();
+  _createGroup: function (e) {
+    e.preventDefault();
+    $('.modal').modal('hide');
     var group = {};
 
     Object.keys(this.state).forEach(function (key) {
@@ -34,6 +36,7 @@ var GroupForm = React.createClass({
   },
 
   render: function () {
+
     return (
       <div className="container">
         <div className="row">
@@ -59,7 +62,6 @@ var GroupForm = React.createClass({
                 <input type="text" className="form-control" placeholder="Banner URL"
                   valueLink={this.linkState("banner_url")} />
               </div>
-
               <button type="submit" className="btn btn-primary">Createth the group!</button>
             </form>
           </div>

@@ -10,13 +10,13 @@ var UserEditForm = React.createClass({
 
   initialAttrs: function () {
     return {
-      id: this.props.location.state.id,
-      email: this.props.location.state.email,
-      name: this.props.location.state.name,
-      location: this.props.location.state.location,
-      gender: this.props.location.state.gender,
-      bio: this.props.location.state.bio,
-      avatar_url: this.props.location.state.avatar_url
+      id: this.props.current_user.id,
+      email: this.props.current_user.email,
+      name: this.props.current_user.name,
+      location: this.props.current_user.location,
+      gender: this.props.current_user.gender,
+      bio: this.props.current_user.bio,
+      avatar_url: this.props.current_user.avatar_url
     };
   },
 
@@ -26,6 +26,7 @@ var UserEditForm = React.createClass({
 
   _updateUser: function (e) {
     e.preventDefault();
+    $('.modal').modal('hide');
     var user = {};
 
     Object.keys(this.state).forEach(function (key) {
@@ -33,10 +34,10 @@ var UserEditForm = React.createClass({
         }.bind(this));
 
     ApiUtil.updateUser(user, function (id) {
-      this.props.history.pushState(null, "user/" + id, {});
+      this.history.pushState(null, "user/" + id, {});
     }.bind(this));
 
-    this.setState(this.initialAttrs);
+    this.setState(user);
   },
 
   render: function () {

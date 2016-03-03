@@ -5,6 +5,7 @@ var eventsIndex = require('./eventsIndex');
 var EventIndexItem = require('./eventIndexItem');
 var GroupIndexItem = require('./groupIndexItem');
 var History = require('react-router').History;
+var UserEditForm = require('./userEditForm');
 
 var UserDetail = React.createClass({
 
@@ -34,15 +35,24 @@ var UserDetail = React.createClass({
   },
 
   _toUserEditForm: function () {
-    this.props.history.pushState(this.state.user, 'userEditForm', {});
+    return <UserEditForm current_user={this.state.user} />;
   },
 
   _allowEdit: function () {
     if (window.current_user === this.state.user.id) {
       return (
-        <form onSubmit={this._toUserEditForm}>
-          <button type="submit" className="btn btn-default">Edit your information.</button>
-        </form>
+        <div>
+          <form>
+            <a type="submit"
+              className="btn btn-primary btn-lg"
+              data-toggle="modal"
+              data-target="#userEditFormModal">
+
+              Edit your information.
+
+            </a>
+          </form>
+        </div>
       );
     }
   },
@@ -84,6 +94,16 @@ var UserDetail = React.createClass({
                 })}
             </div>
 
+          </div>
+        </div>
+
+        <div className="modal fade" id="userEditFormModal" tabIndex="-1" role="dialog" aria-labelledby="userEditFormModalLabel">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                {this._toUserEditForm()}
+              </div>
+            </div>
           </div>
         </div>
 

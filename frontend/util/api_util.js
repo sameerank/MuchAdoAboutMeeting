@@ -200,6 +200,21 @@ ApiUtil = {
         console.log(resp);
       }
     });
+  },
+
+  signIntoDemo: function () {
+    var options = {
+      url: "session",
+      method: "POST",
+      data: {user: {email: "test@example.com", password: "example"}},
+      success: function () {
+        window.location.href = '/';
+      }.bind(this),
+      error: function (resp) {
+        console.log(resp);
+      }
+    };
+    $.ajax(options);
   }
 }
 

@@ -3,8 +3,10 @@ var GroupStore = require('../stores/group');
 var ApiUtil = require('../util/api_util');
 var UserIndexItem = require('./userIndexItem');
 var EventIndexItem = require('./eventIndexItem');
+var EventForm = require('./eventForm');
 var GroupHeader = require('./groupHeader');
 var History = require('react-router').History;
+
 
 var JoinGroupToggle = require('./joinGroupToggle');
 
@@ -35,10 +37,6 @@ var GroupDetail = React.createClass({
       this.setState(this.getStateFromStore());
     },
 
-    _goToCreateEventForm: function () {
-      this.props.history.pushState(this.state.group, 'eventForm', {});
-    },
-
     render: function () {
       if (this.state.group === undefined) { return <div></div>; }
       if (this.state.group.users === undefined) { return <div></div>; }
@@ -51,9 +49,25 @@ var GroupDetail = React.createClass({
 
           <JoinGroupToggle group={this.state.group} />
 
-          <form onSubmit={this._goToCreateEventForm}>
-            <button type="submit" className="btn btn-default">Create an event new!</button>
+          <form>
+            <a type="submit"
+              className="btn btn-primary btn-lg"
+              data-toggle="modal"
+              data-target="#createEventFormModal">
+                Createth an event new!
+            </a>
           </form>
+
+          <div className="modal fade" id="createEventFormModal" tabIndex="-1"
+            role="dialog" aria-labelledby="createEventFormModalLabel">
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-body">
+                  <EventForm group={this.state.group}/>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className="paper-box">
             <div>
