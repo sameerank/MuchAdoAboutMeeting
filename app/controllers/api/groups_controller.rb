@@ -1,5 +1,5 @@
 class Api::GroupsController < ApplicationController
-  before_action :require_sign_in!, only: [:update, :create, :delete]
+  before_action :require_sign_in!, only: [:update, :create, :delete, :show]
 
   def index
     @groups = Group.all

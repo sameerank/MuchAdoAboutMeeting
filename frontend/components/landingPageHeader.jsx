@@ -15,13 +15,13 @@ var LandingPageHeader = React.createClass({
           Nor airless dungeon, nor strong links of iron,<br />
           Can be retentive to the strength of spirit; <br /><br />
 
-          If thou wishest to demo without an account</h3><br />
+        If thou wishest to enter without an account,</h3><br />
 
           <button
             type="button"
-            className="btn-lg btn-primary"
+            className="btn-lg btn-warning"
             onClick={this._signIntoDemo}>
-            Clicketh to enter
+            <h2>Click hither to demo.</h2>
           </button>
 
         </div>
@@ -41,13 +41,18 @@ var LandingPageHeader = React.createClass({
 
   render: function () {
     return (
-      <header>
-        <img alt="MuchAdoAboutMeeting"
-          src="http://res.cloudinary.com/deh4rnozs/image/upload/v1456344888/Edwin_Austin_Abbey_King_Lear__Act_I__Scene_I_The_Metropolitan_Museum_of_Art_l4f8ay.jpg" />
+        <header id="slider">
 
-        {this._headerContentIfSignedIn()}
+          <figure>
+            <img src="http://res.cloudinary.com/deh4rnozs/image/upload/c_crop,h_1500,w_4500/v1457048850/Procession_of_Characters_from_Shakespeare_s_Plays_-_Google_Art_Project_ldzedw.jpg" alt="" />
+            <img src="http://res.cloudinary.com/deh4rnozs/image/upload/c_crop,h_420,w_1260/v1457047459/Edwin_Austin_Abbey_King_Lear__Act_I__Scene_I_The_Metropolitan_Museum_of_Art_1_ny0gmr.jpg" alt="" />
+            <img src="http://res.cloudinary.com/deh4rnozs/image/upload/c_crop,h_576,w_1728/v1457048191/Much-Ado-About-Nothing-painting-by-J.-Forbes-Robertson_wth9pt.jpg" alt="" />
+            <img src="http://res.cloudinary.com/deh4rnozs/image/upload/c_crop,h_865,w_2595,y_840/v1457048204/Gilbert_WShakespeares_Plays_ugyxux.jpg" alt="" />
+            <img src="http://res.cloudinary.com/deh4rnozs/image/upload/c_crop,h_1500,w_4500/v1457048850/Procession_of_Characters_from_Shakespeare_s_Plays_-_Google_Art_Project_ldzedw.jpg" alt="" />
+          </figure>
 
-      </header>
+          {this._headerContentIfSignedIn()}
+        </header>
     );
   }
 });

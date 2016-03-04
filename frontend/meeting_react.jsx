@@ -17,6 +17,8 @@ var GroupsIndex = require('./components/groupsIndex');
 var GroupDetail = require('./components/groupDetail');
 var GroupForm = require('./components/groupForm');
 var LandingPage = require('./components/landingPage');
+var NoMatch = require('./components/noMatch');
+var UnauthorizedAccess = require('./components/unauthorizedAccess');
 
 
 var routes = (
@@ -28,6 +30,8 @@ var routes = (
     <Route path="groupForm" component={GroupForm} />
     <Route path="user/:userId" component={UserDetail} />
     <Route path="userEditForm" component={UserEditForm} />
+    <Route path="unauthorizedAccess" component={UnauthorizedAccess} />
+    <Route path="*" component={NoMatch} />
   </Route>
 );
 

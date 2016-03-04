@@ -1,6 +1,6 @@
 class Api::EventsController < ApplicationController
 
-  before_action :require_sign_in!, only: [:update, :create, :delete]
+  before_action :require_sign_in!
 
   def index
     @events = Event.all

@@ -28,7 +28,7 @@ var GroupsIndex = React.createClass({
   render: function () {
     return (
       <section>
-        <div className="container group-index">
+        <div className="container">
           <div className="row no-gutters">
             {
               this.state.groups.map(function (group) {

@@ -33,6 +33,11 @@ var LandingPage = React.createClass({
       <section>
         <LandingPageHeader />
         {landingPageContents()}
+        <footer>
+          <div className="text-center footer">
+            <a href="https://github.com/sameerank/MuchAdoAboutMeeting"><h3>Thou canst view all the source code here.</h3></a>
+          </div>
+        </footer>
       </section>
     );
   }

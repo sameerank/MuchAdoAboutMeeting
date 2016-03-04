@@ -62,7 +62,7 @@ var UserDetail = React.createClass({
 
     return (
       <div>
-        <div className="paper-box">
+        <div className="paper-box info-box">
           <ul className="nav nav-tabs" role="tablist">
             <li role="presentation" className="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
             <li role="presentation"><a href="#events-attending" aria-controls="events-attending" role="tab" data-toggle="tab">Events</a></li>

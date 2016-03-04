@@ -19,12 +19,16 @@ var NavBar = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
-    ApiUtil.fetchUser(parseInt(window.current_user));
+    if (window.current_user !== undefined) {
+      ApiUtil.fetchUser(parseInt(window.current_user));
+    }
   },
 
   componentDidMount: function () {
     this.eventListener = UserStore.addListener(this._onChange);
-    ApiUtil.fetchUser(parseInt(window.current_user));
+    if (window.current_user !== undefined) {
+      ApiUtil.fetchUser(parseInt(window.current_user));
+    }
   },
 
   componentWillUnmount: function () {
@@ -35,7 +39,8 @@ var NavBar = React.createClass({
     this.setState(this.getStateFromStore());
   },
 
-  _logout: function () {
+  _logout: function (e) {
+    e.preventDefault();
     ApiUtil.logout();
   },
 
@@ -44,8 +49,17 @@ var NavBar = React.createClass({
     this.history.pushState(null, 'user/' + this.state.current_user.id, {});
   },
 
+  _toHome: function (e) {
+    e.preventDefault();
+    this.history.pushState(null, '/', {});
+  },
+
   _toUserEditForm: function () {
     return <UserEditForm current_user={this.state.current_user} />
+  },
+
+  _toGroupSearchResults: function (e) {
+    e.preventDefault();
   },
 
   render: function () {
@@ -104,6 +118,10 @@ var NavBar = React.createClass({
             <div className="modal fade" id="userEditFormModal" tabIndex="-1" role="dialog" aria-labelledby="userEditFormModalLabel">
               <div className="modal-dialog" role="document">
                 <div className="modal-content">
+                  <div className="modal-header">
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 className="modal-title">Form for editing thyne information:</h4>
+                  </div>
                   <div className="modal-body">
                     {this._toUserEditForm()}
                   </div>
@@ -119,7 +137,7 @@ var NavBar = React.createClass({
       <div>
         <nav className="navbar navbar-default navbar-fixed-top">
           <div className="container">
-            <a className="navbar-brand" href="#">
+            <a className="navbar-brand" href="#" onClick={this._toHome}>
               <img alt="MuchAdoAboutMeeting" src="http://img1.meetupstatic.com/img/94156887029318281691566697/logo.svg" />
             </a>
             <div className="navbar-collapse collapse">
@@ -132,7 +150,7 @@ var NavBar = React.createClass({
                 </li>
 
                 <li>
-                  <form className="navbar-form navbar-left" role="search">
+                  <form className="navbar-form navbar-left" role="search" onSubmit={this._toGroupSearchResults} >
                     <div className="form-group">
                       <input type="text"
                         className="form-control"
@@ -163,6 +181,10 @@ var NavBar = React.createClass({
         <div className="modal fade" id="createGroupModal" tabIndex="-1" role="dialog" aria-labelledby="createGroupModalLabel">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 className="modal-title">A form for creating a group:</h4>
+              </div>
               <div className="modal-body">
                 <GroupForm />
               </div>
@@ -173,6 +195,10 @@ var NavBar = React.createClass({
         <div className="modal fade" id="searchResultsModal" tabIndex="-1" role="dialog" aria-labelledby="searchResultsModalLabel">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 className="modal-title">Search results:</h4>
+              </div>
               <div className="modal-body">
                 <GroupsSearch searchQuery={this.state.searchQuery} />
               </div>

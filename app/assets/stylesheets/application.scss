@@ -18,6 +18,7 @@
 @import "bootstrap";
 
 body {
+  margin: 0;
   padding-top: 70px;
   background-image: url("http://res.cloudinary.com/deh4rnozs/image/upload/v1456718763/97e4920803e5054f990f8cd529a8c0e4_a0vcrg.jpg");
 }
@@ -37,6 +38,31 @@ header .header-content {
   left:20px;
   position: absolute;
   color: white;
+}
+
+footer {
+  margin-top: 20px;
+  background-color: white;
+  position: relative;
+  height: 100px;
+  bottom: 0;
+  width: 100%;
+}
+
+.box {
+    padding: 0 5px 0 5px;
+}
+.box .inner {
+    background-color: #fff;
+}
+
+.search-modal-content {
+  position: relative;
+  width: 0px;
+}
+
+.footer {
+  padding-top: 20px;
 }
 
 .clickable{
@@ -62,6 +88,7 @@ header .header-content {
 }
 
 .thumbnail-content {
+  padding: auto 20px;
   height: 150px;
   width: 300px;
   bottom:-60px;
@@ -77,9 +104,16 @@ header .header-content {
 
 .group-icon {
   position: absolute;
+  padding: auto 20px;
   left: -250px;
   top: 0px;
   clip-path: inset(25px 250px 25px 250px);
+}
+
+.info-box {
+  min-width: 1120px;
+  margin-right: 200px;
+  min-height: 500px;
 }
 
 .paper-box {
@@ -94,4 +128,28 @@ header .header-content {
 .center-pills {
   display: flex;
   justify-content: center;
+}
+
+@keyframes slidy {
+  0% { left: 0%; }
+  20% { left: 0%; }
+  25% { left: -100%; }
+  45% { left: -100%; }
+  50% { left: -200%; }
+  70% { left: -200%; }
+  75% { left: -300%; }
+  95% { left: -300%; }
+  100% { left: -400%; }
+}
+
+header#slider { overflow: hidden; }
+header#slider figure img { width: 20%; float: left; }
+header#slider figure {
+  position: relative;
+  width: 500%;
+  margin: 0;
+  left: 0;
+  text-align: left;
+  font-size: 0;
+  animation: 30s slidy infinite;
 }

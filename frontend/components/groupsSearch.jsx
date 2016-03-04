@@ -17,7 +17,7 @@ var GroupsSearch = React.createClass({
     return (
       <section>
         <div className="container group-index">
-          <div className="row no-gutters">
+          <div className="row search-modal-content">
             {
               searchResults()
             }

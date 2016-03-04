@@ -10,7 +10,9 @@ var GroupIndexItem = React.createClass({
 
   render: function () {
     return (
+
       <div onClick={this.showDetail} className="col-sm-4">
+
         <img src={this.props.group.banner_url}
           alt="Group icon is missing"
           className="group-icon clickable" />
@@ -18,6 +20,7 @@ var GroupIndexItem = React.createClass({
           <h3>{this.props.group.title}</h3>
           <p>{this.props.group.description}</p>
         </div>
+
       </div>
     );
   }

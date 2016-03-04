@@ -41,9 +41,8 @@ var GroupDetail = React.createClass({
       if (this.state.group === undefined) { return <div></div>; }
       if (this.state.group.users === undefined) { return <div></div>; }
       if (this.state.group.events === undefined) { return <div></div>; }
-
       return (
-        <div className="text-center">
+        <div>
           <GroupHeader group={this.state.group} />
           <br />
 
@@ -62,6 +61,10 @@ var GroupDetail = React.createClass({
             role="dialog" aria-labelledby="createEventFormModalLabel">
             <div className="modal-dialog" role="document">
               <div className="modal-content">
+                <div className="modal-header">
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 className="modal-title">A form for creating an event:</h4>
+                </div>
                 <div className="modal-body">
                   <EventForm group={this.state.group}/>
                 </div>
@@ -69,7 +72,7 @@ var GroupDetail = React.createClass({
             </div>
           </div>
 
-          <div className="paper-box">
+          <div className="paper-box info-box">
             <div>
               <ul className="nav nav-tabs" role="tablist">
                 <li role="presentation" className="active"><a href="#group-details" aria-controls="group-details" role="tab" data-toggle="tab">Group Details</a></li>
@@ -82,9 +85,13 @@ var GroupDetail = React.createClass({
 
               <div role="tabpanel" className="tab-pane active fade in" id="group-details">
                 <div className="detail paper-box">
-                  {['title', 'description', 'location'].map(function (attr) {
-                    return <p key={attr}>{attr}: {this.state.group[attr]}</p>
-                  }.bind(this))}
+                  <p><b>Group title:</b></p><p>{this.state.group.title}</p>
+                  <p><b>Group description:</b></p><p>{this.state.group.description}</p>
+                  <p><b>Group location:</b></p><p>{this.state.group.location}</p>
+                  <p><b>Group organizer:</b></p>
+                  <UserIndexItem
+                    user={this.state.group.organizer}
+                    group={this.state.group} />
                 </div>
               </div>
 

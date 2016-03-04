@@ -1,5 +1,9 @@
 var ApiActions = require('../actions/api_actions');
 
+var handleError = function () {
+  window.location = '/#/unauthorizedAccess';
+};
+
 ApiUtil = {
 
   createUserEvent: function (user_event) {
@@ -10,9 +14,7 @@ ApiUtil = {
       success: function (resp) {
         this.fetchEvent(resp.event_id);
       }.bind(this),
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     };
     $.ajax(options);
   },
@@ -24,9 +26,7 @@ ApiUtil = {
       success: function (resp) {
         this.fetchEvent(resp.event_id);
       }.bind(this),
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     };
     $.ajax(options);
   },
@@ -39,9 +39,7 @@ ApiUtil = {
       success: function (resp) {
         this.fetchGroup(resp.group_id);
       }.bind(this),
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     };
     $.ajax(options);
   },
@@ -53,9 +51,7 @@ ApiUtil = {
       success: function (resp) {
         this.fetchGroup(resp.group_id);
       }.bind(this),
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     };
     $.ajax(options);
   },
@@ -69,9 +65,7 @@ ApiUtil = {
         ApiActions.receiveSingleUser(resp);
         callback(resp.id);
       },
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     };
     $.ajax(options);
   },
@@ -85,9 +79,7 @@ ApiUtil = {
         ApiActions.receiveSingleGroup(resp);
         callback(resp.id);
       },
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     };
     $.ajax(options);
   },
@@ -101,9 +93,7 @@ ApiUtil = {
         ApiActions.receiveSingleEvent(resp);
         callback(resp.id);
       },
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     };
     $.ajax(options);
   },
@@ -114,9 +104,6 @@ ApiUtil = {
       type: "GET",
       success: function (resp) {
         ApiActions.receiveAllUsers(resp);
-      },
-      error: function (resp) {
-        console.log(resp);
       }
     };
     $.ajax(options);
@@ -127,9 +114,6 @@ ApiUtil = {
       url: "api/users/" + id,
       success: function (resp) {
         ApiActions.receiveSingleUser(resp);
-      },
-      error: function (resp) {
-        console.log(resp);
       }
     };
     $.ajax(options);
@@ -142,9 +126,7 @@ ApiUtil = {
       success: function (resp) {
         ApiActions.receiveAllEvents(resp);
       },
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     };
     $.ajax(options);
   },
@@ -155,9 +137,7 @@ ApiUtil = {
       success: function (resp) {
         ApiActions.receiveSingleEvent(resp);
       },
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     };
     $.ajax(options);
   },
@@ -169,9 +149,7 @@ ApiUtil = {
       success: function (resp) {
         ApiActions.receiveAllGroups(resp);
       },
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     };
     $.ajax(options);
   },
@@ -182,9 +160,7 @@ ApiUtil = {
       success: function (resp) {
         ApiActions.receiveSingleGroup(resp);
       },
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     };
     $.ajax(options);
   },
@@ -196,9 +172,7 @@ ApiUtil = {
       success: function () {
         window.location.href = '/';
       },
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     });
   },
 
@@ -210,9 +184,7 @@ ApiUtil = {
       success: function () {
         window.location.href = '/';
       }.bind(this),
-      error: function (resp) {
-        console.log(resp);
-      }
+      error: handleError
     };
     $.ajax(options);
   }
