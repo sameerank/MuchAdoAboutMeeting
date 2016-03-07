@@ -28,14 +28,16 @@ var EventIndex = React.createClass({
   render: function () {
     return (
       <section>
-        <div className="container event-index">
-          <div className="row no-gutters">
-            {
-              this.state.events.map(function (event) {
-                return <EventIndexItem key={event.id} event={event}
-                  group={event.group} />;
-              })
-            }
+        <div className="container items-index">
+          <div className="row">
+            <div>
+              {
+                this.state.events.map(function (event) {
+                  return <EventIndexItem key={event.id} event={event}
+                    group={event.group} />;
+                })
+              }
+            </div>
           </div>
         </div>
       </section>

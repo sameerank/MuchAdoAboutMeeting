@@ -33,13 +33,13 @@ var JoinEventToggle = React.createClass({
       if (event_member_ids.indexOf(window.current_user) > -1) {
         return (
           <form onClick={this._removeUserFromEvent}>
-            <button type="submit" className="btn btn-default">Leaveth event!</button>
+            <button type="submit" className="btn btn-default btn-lg btn-danger">Leaveth event!</button>
           </form>
         );
       } else {
         return (
           <form onClick={this._addUserToEvent}>
-            <button type="submit" className="btn btn-default">Joineth event!</button>
+            <button type="submit" className="btn btn-default btn-lg btn-success">Joineth event!</button>
           </form>
         );
       }
@@ -47,6 +47,7 @@ var JoinEventToggle = React.createClass({
 
     return (
       <div className="text-center">
+        <br />
         {joinButton()}
       </div>
     );

@@ -180,7 +180,7 @@ ApiUtil = {
     var options = {
       url: "session",
       method: "POST",
-      data: {user: {email: "test@example.com", password: "example"}},
+      data: {user: {email: "ghost@kingdom.dk", password: "booooo"}},
       success: function () {
         window.location.href = '/';
       }.bind(this),

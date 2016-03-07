@@ -8,11 +8,20 @@ var EventIndexItem = React.createClass({
     this.history.pushState(null, '/event/' + this.props.event.id, {});
   },
 
+  _descriptionOutput: function () {
+    var maxLength = 80;
+    if (this.props.event.description.length > maxLength) {
+      return this.props.event.description.slice(0,maxLength) + " ...";
+    } else {
+      return this.props.event.description;
+    }
+  },
+
   render: function () {
     return (
       <div onClick={this.showDetail} className="paper-box clickable">
         <h3>{this.props.event.title}</h3>
-        <p>{this.props.event.description}</p>
+        <p>{this._descriptionOutput()}</p>
       </div>
     );
   }

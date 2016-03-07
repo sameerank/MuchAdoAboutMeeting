@@ -33,13 +33,13 @@ var JoinGroupToggle = React.createClass({
       if (group_member_ids.indexOf(window.current_user) > -1) {
         return (
           <form onClick={this._removeUserFromGroup}>
-            <button type="submit" className="btn btn-default">Leaveth group!</button>
+            <button type="submit" className="btn btn-default btn-lg btn-danger">Leaveth group!</button>
           </form>
         );
       } else {
         return (
           <form onClick={this._addUserToGroup}>
-            <button type="submit" className="btn btn-default">Joineth group!</button>
+            <button type="submit" className="btn btn-default btn-lg btn-success">Joineth group!</button>
           </form>
         );
       }

@@ -17,6 +17,23 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.navbar, .btn-lg, .modal {
+  font-family: Fondamento, cursive;
+}
+
+.nav-pills, .groups-title {
+  font-family: 'Monsieur La Doulaise', cursive;
+  font-size: 40px;
+}
+
+.gray-background {
+  background:rgba(0,0,0,0.5);
+}
+
+h3 {
+  font-family: 'Playfair Display', cursive;
+}
+
 body {
   margin: 0;
   padding-top: 70px;
@@ -40,6 +57,15 @@ header .header-content {
   color: white;
 }
 
+.group-header-content {
+  position: absolute;
+  color: white;
+  left: 300px;
+  padding: 20px 0;
+  font-family: 'Monsieur La Doulaise', cursive;
+  font-size: 40px;
+}
+
 footer {
   margin-top: 20px;
   background-color: white;
@@ -49,11 +75,21 @@ footer {
   width: 100%;
 }
 
-.box {
-    padding: 0 5px 0 5px;
+.user-index-item {
+  right: 20px;
 }
-.box .inner {
-    background-color: #fff;
+
+.navbar-brand {
+  padding: 12px 15px;
+}
+
+.groups-index {
+  width: 980px;
+  padding: 0px 0px 40px 0px;
+}
+
+.container {
+  width: 950px;
 }
 
 .search-modal-content {
@@ -70,62 +106,50 @@ footer {
   cursor: hand;
 }
 
-.center-div{
-    margin: 0 auto;
-    width: 172px;
+.center-div {
+  margin: 0 auto;
 }
 
-.row.no-gutters {
-  margin-right: 0;
-  margin-left: 0;
-}
-.row.no-gutters > [class^="col-"],
-.row.no-gutters > [class*=" col-"] {
-  padding-right: 0;
-  padding-left: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
+.sign-in-or-up {
+  width: 172px;
 }
 
 .thumbnail-content {
   padding: auto 20px;
-  height: 150px;
-  width: 300px;
-  bottom:-60px;
+  height: 170px;
+  width: 280px;
   left:10px;
   position: relative;
   color: white;
   font-family: 'Lobster', serif;
 }
 
-.event-index {
+.items-index {
   padding-top: 20px;
 }
 
 .group-icon {
   position: absolute;
   padding: auto 20px;
-  left: -250px;
-  top: 0px;
-  clip-path: inset(25px 250px 25px 250px);
 }
 
 .info-box {
-  min-width: 1120px;
-  margin-right: 200px;
-  min-height: 500px;
+  position: relative;
+  left:0;
+  right:0;
+  bottom:0;
 }
 
 .paper-box {
-  font-family: times;
+  font-family: 'Playfair Display', cursive;
   font-size: 20px;
   background-image:url("http://res.cloudinary.com/deh4rnozs/image/upload/v1456718348/paper_ztqxwe.png");
-  margin: 40px;
+  margin: 10px;
   padding: 20px;
   display: inline-block;
 }
 
-.center-pills {
+.flex-center {
   display: flex;
   justify-content: center;
 }

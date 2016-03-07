@@ -10,9 +10,15 @@ var GroupHeader = React.createClass({
 
   render: function () {
     return (
-      <header onClick={this.showDetail} className="clickable header-content">
+      <header className="clickable flex-center"
+      onClick={this.showDetail}>
         <img alt={this.props.group.title}
           src={this.props.group.banner_url} />
+        <div className="group-header-content flex-center">
+          <span className="gray-background">
+            {this.props.group.title}
+          </span>
+        </div>
       </header>
     );
   }

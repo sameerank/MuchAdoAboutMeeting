@@ -11,28 +11,26 @@ var LandingPageHeader = React.createClass({
     if (window.current_user === undefined) {
       return (
         <div className="header-content">
-          <h3>Nor stony tower, nor walls of beaten brass,<br />
-          Nor airless dungeon, nor strong links of iron,<br />
-          Can be retentive to the strength of spirit; <br /><br />
 
-        If thou wishest to enter without an account,</h3><br />
+          <h3 className="gray-background">Welcome to MuchAdoAboutMeeting!<br />
+            A website inspired by <a href="http://www.meetup.com">meetup</a> for thespian robots and Shakespeare's plays.<br />
+            <br />
+            If thou wishest to enter without an account,</h3><br />
 
-          <button
-            type="button"
-            className="btn-lg btn-warning"
-            onClick={this._signIntoDemo}>
-            <h2>Click hither to demo.</h2>
-          </button>
+        <button
+          type="button"
+          className="btn-lg btn-danger"
+          onClick={this._signIntoDemo}>
+          <h2>Click hither to demo.</h2>
+        </button>
 
         </div>
       );
     } else {
       return (
         <div className="header-content">
-          <h3>
-            By my sweet soul, I mean setting thee at liberty,<br />
-            enfreedoming thy person; thou wert immured,<br />
-            restrained, captivated, bound.<br />
+          <h3 className="gray-background">Welcome to MuchAdoAboutMeeting!<br />
+            A website inspired by <a href="http://www.meetup.com">meetup</a> for thespian robots and Shakespeare's plays.
           </h3>
         </div>
       );

@@ -46,16 +46,17 @@ var GroupDetail = React.createClass({
           <GroupHeader group={this.state.group} />
           <br />
 
-          <JoinGroupToggle group={this.state.group} />
-
-          <form>
-            <a type="submit"
-              className="btn btn-primary btn-lg"
-              data-toggle="modal"
-              data-target="#createEventFormModal">
-                Createth an event new!
-            </a>
-          </form>
+          <span className="flex-center">
+            <JoinGroupToggle group={this.state.group} />&nbsp;&nbsp;&nbsp;
+            <form>
+              <a type="submit"
+                className="btn btn-primary btn-lg"
+                data-toggle="modal"
+                data-target="#createEventFormModal">
+                Createth a new event!
+              </a>
+            </form>
+          </span>
 
           <div className="modal fade" id="createEventFormModal" tabIndex="-1"
             role="dialog" aria-labelledby="createEventFormModalLabel">
@@ -96,17 +97,21 @@ var GroupDetail = React.createClass({
               </div>
 
               <div role="tabpanel" className="tab-pane fade" id="events-in-group">
-                {this.state.group.events.map(function (event) {
-                  return (<EventIndexItem key={event.id} event={event}
-                    group={this.state.group} />);
-                  }.bind(this))}
+                <div className="row">
+                  {this.state.group.events.map(function (event) {
+                    return (<EventIndexItem key={event.id} event={event}
+                      group={this.state.group} />);
+                    }.bind(this))}
+                </div>
               </div>
 
               <div role="tabpanel" className="tab-pane fade" id="group-members">
-                {this.state.group.users.map(function (user) {
-                  return (<UserIndexItem key={user.id} user={user}
-                    group={this.state.group} />);
-                  }.bind(this))}
+                <div className="row">
+                  {this.state.group.users.map(function (user) {
+                    return (<UserIndexItem key={user.id} user={user}
+                      group={this.state.group} />);
+                    }.bind(this))}
+                </div>
               </div>
 
             </div>

@@ -9,15 +9,18 @@ var LandingPage = React.createClass({
 
     var landingPageContents = function () {
       if (window.current_user === undefined) {
-        return < GroupsIndex />;
+        return (<div><br />
+          <div className="text-center groups-title">Groups</div>
+          < GroupsIndex />
+        </div>);
     } else {
       return (<div>
 
           <br />
 
-          <ul className="nav nav-pills center-pills" role="tablist">
-            <li role="presentation" className="active"><a href="#events" aria-controls="events" role="tab" data-toggle="tab">Events</a></li>
-            <li role="presentation"><a href="#groups" aria-controls="groups" role="tab" data-toggle="tab">Groups</a></li>
+          <ul className="nav nav-pills flex-center" role="tablist">
+            <li role="presentation" className="active"><a href="#events" aria-controls="events" role="tab" data-toggle="tab"><h2>Events</h2></a></li>
+            <li role="presentation"><a href="#groups" aria-controls="groups" role="tab" data-toggle="tab"><h2>Groups</h2></a></li>
           </ul>
 
           <div className="tab-content">

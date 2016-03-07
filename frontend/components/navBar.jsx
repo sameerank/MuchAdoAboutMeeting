@@ -133,21 +133,34 @@ var NavBar = React.createClass({
       }
     }.bind(this);
 
+    var startAGroupLinkAccordingToLogInStatus = function () {
+      if (window.current_user === undefined) {
+        return (
+          <li>
+          </li>
+        );
+      } else {
+        return (
+          <li>
+            <a className="clickable" data-toggle="modal" data-target="#createGroupModal">
+              <b>Starteth</b> a group
+            </a>
+          </li>
+        );
+      }
+    }.bind(this);
+
     return (
       <div>
         <nav className="navbar navbar-default navbar-fixed-top">
           <div className="container">
             <a className="navbar-brand" href="#" onClick={this._toHome}>
-              <img alt="MuchAdoAboutMeeting" src="http://img1.meetupstatic.com/img/94156887029318281691566697/logo.svg" />
+              <img alt="MuchAdoAboutMeeting" src="http://res.cloudinary.com/deh4rnozs/image/upload/v1457224670/logo_rkqyls.gif" />
             </a>
             <div className="navbar-collapse collapse">
               <ul className="nav navbar-nav navbar-left">
 
-                <li>
-                  <a className="clickable" data-toggle="modal" data-target="#createGroupModal">
-                    <b>Starteth</b> a group
-                  </a>
-                </li>
+                {startAGroupLinkAccordingToLogInStatus()}
 
                 <li>
                   <form className="navbar-form navbar-left" role="search" onSubmit={this._toGroupSearchResults} >

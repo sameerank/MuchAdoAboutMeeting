@@ -23,7 +23,7 @@ var GroupForm = React.createClass({
     e.preventDefault();
     $('.modal').modal('hide');
     var group = {};
-
+    
     Object.keys(this.state).forEach(function (key) {
           group[key] = this.state[key];
         }.bind(this));
