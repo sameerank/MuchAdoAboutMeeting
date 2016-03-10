@@ -36,7 +36,7 @@ var EventForm = React.createClass({
         }.bind(this));
 
     ApiUtil.createEvent(event, function (id) {
-      this.props.history.pushState(null, "event/" + id, {});
+      this.history.pushState(null, "event/" + id, {});
     }.bind(this));
 
     this.setState(this.blankAttrs);

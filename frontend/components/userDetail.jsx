@@ -61,7 +61,7 @@ var UserDetail = React.createClass({
     if (this.state.user === undefined) { return <div></div>; }
 
     return (
-      <div>
+      <div className="flex-center">
         <div className="paper-box info-box">
           <ul className="nav nav-tabs" role="tablist">
             <li role="presentation" className="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>

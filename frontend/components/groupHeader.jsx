@@ -14,7 +14,7 @@ var GroupHeader = React.createClass({
       onClick={this.showDetail}>
         <img alt={this.props.group.title}
           src={this.props.group.banner_url} />
-        <div className="group-header-content flex-center">
+        <div className="group-header-content">
           <span className="gray-background">
             {this.props.group.title}
           </span>

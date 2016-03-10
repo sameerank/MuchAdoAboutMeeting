@@ -12,8 +12,8 @@ var LandingPageHeader = React.createClass({
       return (
         <div className="header-content">
 
-          <h3 className="gray-background">Welcome to MuchAdoAboutMeeting!<br />
-            A website inspired by <a href="http://www.meetup.com">meetup</a> for thespian robots and Shakespeare's plays.<br />
+          <h3 className="gray-background header-text">Welcome to MuchAdoAboutMeeting!<br />
+            A website inspired by <a href="http://www.meetup.com">Meetup</a> for thespian robots and Shakespeare's plays.<br />
             <br />
             If thou wishest to enter without an account,</h3><br />
 
@@ -29,8 +29,8 @@ var LandingPageHeader = React.createClass({
     } else {
       return (
         <div className="header-content">
-          <h3 className="gray-background">Welcome to MuchAdoAboutMeeting!<br />
-            A website inspired by <a href="http://www.meetup.com">meetup</a> for thespian robots and Shakespeare's plays.
+          <h3 className="gray-background header-text">Welcome to MuchAdoAboutMeeting!<br />
+            A website inspired by <a href="http://www.meetup.com">Meetup</a> for thespian robots and Shakespeare's plays.
           </h3>
         </div>
       );
