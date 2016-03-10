@@ -42,37 +42,38 @@ var EventDetail = React.createClass({
         <GroupHeader group={this.state.event.group} />
 
         <JoinEventToggle event={this.state.event} />
+        <div className="flex-center">
+          <div className="paper-box info-box">
+            <div>
+              <ul className="nav nav-tabs" role="tablist">
+                <li role="presentation" className="active"><a href="#event-details" aria-controls="event-details" role="tab" data-toggle="tab">Event Details</a></li>
+                <li role="presentation"><a href="#users_attending_event" aria-controls="users_attending_event" role="tab" data-toggle="tab">Users</a></li>
+              </ul>
+            </div>
 
-        <div className="paper-box info-box">
-          <div>
-            <ul className="nav nav-tabs" role="tablist">
-              <li role="presentation" className="active"><a href="#event-details" aria-controls="event-details" role="tab" data-toggle="tab">Event Details</a></li>
-              <li role="presentation"><a href="#users_attending_event" aria-controls="users_attending_event" role="tab" data-toggle="tab">Users</a></li>
-            </ul>
-          </div>
+            <div className="tab-content">
 
-          <div className="tab-content">
-
-            <div role="tabpanel" className="tab-pane active fade in" id="event-details">
-              <div className="detail paper-box">
-                <p><b>Event title:</b></p><p>{this.state.event.title}</p>
-                <p><b>Event description:</b></p><p>{this.state.event.description}</p>
-                <p><b>Event location:</b></p><p>{this.state.event.location}</p>
-                <p><b>Start time:</b></p><p>{this.state.event.start_time}</p>
-                <p><b>End time:</b></p><p>{this.state.event.end_time}</p>
-                <p><b>Event host:</b></p>
-                <UserIndexItem
-                  user={this.state.event.host}
-                  group={this.state.event.group} />
+              <div role="tabpanel" className="tab-pane active fade in" id="event-details">
+                <div className="detail paper-box">
+                  <p><b>Event title:</b></p><p>{this.state.event.title}</p>
+                  <p><b>Event description:</b></p><p>{this.state.event.description}</p>
+                  <p><b>Event location:</b></p><p>{this.state.event.location}</p>
+                  <p><b>Start time:</b></p><p>{this.state.event.start_time}</p>
+                  <p><b>End time:</b></p><p>{this.state.event.end_time}</p>
+                  <p><b>Event host:</b></p>
+                  <UserIndexItem
+                    user={this.state.event.host}
+                    group={this.state.event.group} />
+                </div>
               </div>
-            </div>
 
-            <div role="tabpanel" className="tab-pane fade" id="users_attending_event">
-              {this.state.event.users.map(function (user) {
-                return (<UserIndexItem key={user.id} user={user} />);
-              })}
-            </div>
+              <div role="tabpanel" className="tab-pane fade" id="users_attending_event">
+                {this.state.event.users.map(function (user) {
+                  return (<UserIndexItem key={user.id} user={user} />);
+                })}
+              </div>
 
+            </div>
           </div>
         </div>
       </div>
