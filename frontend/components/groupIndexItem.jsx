@@ -22,14 +22,18 @@ var GroupIndexItem = React.createClass({
   render: function () {
     return (
       <div className="col-sm-4 clickable" onClick={this._showDetail}>
+        <div className="absolute-container">
+          <div className="zoomin frame">
+            <img src={this.props.group.banner_url.replace("upload/", "upload/c_crop,e_brightness:-10,h_150,w_300/")}
+              alt="Group icon is missing"
+              className="group-icon"
+              />
+          </div>
+        </div>
 
-        <img src={this.props.group.banner_url.replace("upload/", "upload/c_crop,h_150,w_300/")}
-          alt="Group icon is missing"
-          className="group-icon"
-           />
         <div className="thumbnail-content">
-          <h3 className="gray-background">{this.props.group.title}</h3>
-          <p className="gray-background">{this._descriptionOutput()}</p>
+          <h3 className="text-shadow">{this.props.group.title}</h3>
+          <p className="text-shadow">{this._descriptionOutput()}</p>
         </div>
 
       </div>

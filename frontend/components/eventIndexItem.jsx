@@ -19,7 +19,7 @@ var EventIndexItem = React.createClass({
 
   render: function () {
     return (
-      <div onClick={this.showDetail} className="paper-box clickable">
+      <div onClick={this.showDetail} className="paper-box clickable event-hover">
         <h3>{this.props.event.title}</h3>
         <p>{this._descriptionOutput()}</p>
       </div>

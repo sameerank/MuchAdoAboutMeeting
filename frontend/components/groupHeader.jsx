@@ -10,12 +10,16 @@ var GroupHeader = React.createClass({
 
   render: function () {
     return (
-      <header className="clickable flex-center"
+      <header className="clickable group-header-container"
       onClick={this.showDetail}>
-        <img alt={this.props.group.title}
-          src={this.props.group.banner_url} />
+        <div className="group-header-frame">
+          <div className="group-header-zoomin">
+            <img alt={this.props.group.title}
+              src={this.props.group.banner_url.replace("upload/", "upload/e_brightness:-10/")} />
+          </div>
+        </div>
         <div className="group-header-content">
-          <span className="gray-background">
+          <span className="text-shadow">
             {this.props.group.title}
           </span>
         </div>

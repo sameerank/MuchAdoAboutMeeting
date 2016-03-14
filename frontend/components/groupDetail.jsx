@@ -73,47 +73,48 @@ var GroupDetail = React.createClass({
             </div>
           </div>
 
-          <div className="paper-box info-box">
-            <div>
-              <ul className="nav nav-tabs" role="tablist">
-                <li role="presentation" className="active"><a href="#group-details" aria-controls="group-details" role="tab" data-toggle="tab">Group Details</a></li>
-                <li role="presentation"><a href="#events-in-group" aria-controls="events-in-group" role="tab" data-toggle="tab">Events</a></li>
-                <li role="presentation"><a href="#group-members" aria-controls="group-members" role="tab" data-toggle="tab">Members</a></li>
-              </ul>
-            </div>
-
-            <div className="tab-content">
-
-              <div role="tabpanel" className="tab-pane active fade in" id="group-details">
-                <div className="detail paper-box">
-                  <p><b>Group title:</b></p><p>{this.state.group.title}</p>
-                  <p><b>Group description:</b></p><p>{this.state.group.description}</p>
-                  <p><b>Group location:</b></p><p>{this.state.group.location}</p>
-                  <p><b>Group organizer:</b></p>
-                  <UserIndexItem
-                    user={this.state.group.organizer}
-                    group={this.state.group} />
-                </div>
+          <div className="flex-center">
+            <div className="paper-box info-box">
+              <div>
+                <ul className="nav nav-tabs" role="tablist">
+                  <li role="presentation" className="active"><a href="#group-details" aria-controls="group-details" role="tab" data-toggle="tab">Group Details</a></li>
+                  <li role="presentation"><a href="#events-in-group" aria-controls="events-in-group" role="tab" data-toggle="tab">Events</a></li>
+                  <li role="presentation"><a href="#group-members" aria-controls="group-members" role="tab" data-toggle="tab">Members</a></li>
+                </ul>
               </div>
 
-              <div role="tabpanel" className="tab-pane fade" id="events-in-group">
-                <div className="row">
-                  {this.state.group.events.map(function (event) {
-                    return (<EventIndexItem key={event.id} event={event}
-                      group={this.state.group} />);
-                    }.bind(this))}
+              <div className="tab-content">
+
+                <div role="tabpanel" className="tab-pane active fade in" id="group-details">
+                  <div className="detail paper-box">
+                    <p><b>Group title:</b></p><p>{this.state.group.title}</p>
+                    <p><b>Group description:</b></p><p>{this.state.group.description}</p>
+                    <p><b>Group location:</b></p><p>{this.state.group.location}</p>
+                    <p><b>Group organizer:</b></p>
+                    <UserIndexItem
+                      user={this.state.group.organizer}
+                      group={this.state.group} />
+                  </div>
+                </div>
+
+                <div role="tabpanel" className="tab-pane fade" id="events-in-group">
+                  <div className="row">
+                    {this.state.group.events.map(function (event) {
+                      return (<EventIndexItem key={event.id} event={event}
+                        group={this.state.group} />);
+                      }.bind(this))}
+                  </div>
+                </div>
+
+                <div role="tabpanel" className="tab-pane fade" id="group-members">
+                  <div className="row">
+                    {this.state.group.users.map(function (user) {
+                      return (<UserIndexItem key={user.id} user={user}
+                        group={this.state.group} />);
+                      }.bind(this))}
+                  </div>
                 </div>
               </div>
-
-              <div role="tabpanel" className="tab-pane fade" id="group-members">
-                <div className="row">
-                  {this.state.group.users.map(function (user) {
-                    return (<UserIndexItem key={user.id} user={user}
-                      group={this.state.group} />);
-                    }.bind(this))}
-                </div>
-              </div>
-
             </div>
           </div>
         </div>

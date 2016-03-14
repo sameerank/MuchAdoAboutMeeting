@@ -26,8 +26,12 @@
   font-size: 40px;
 }
 
-.gray-background {
-  background:rgba(0,0,0,0.5);
+.nav-pills a {
+    background-color: #ffffff
+}
+
+.text-shadow {
+  text-shadow: 1px 1px #000000;
 }
 
 h3 {
@@ -61,13 +65,31 @@ header .header-text {
   font-family: Fondamento, cursive;
 }
 
+.event-hover:hover {
+  background-image: none;
+  background-color: #428bca;
+  color: white;
+}
+
+.border-on-hover:hover {
+  background-color: #f9f9f9;
+}
+
 .group-header-content {
   position: absolute;
-  color: white;
-  left: 300px;
-  padding: 20px 0;
+  top: 20px;
+  left: 120px;
   font-family: 'Monsieur La Doulaise', cursive;
   font-size: 40px;
+  color: white;
+}
+
+.group-header-container {
+  position: relative;
+  width: 800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 footer {
@@ -126,6 +148,7 @@ footer {
   position: relative;
   color: white;
   font-family: 'Lobster', serif;
+  pointer-events: none;
 }
 
 .items-index {
@@ -157,6 +180,54 @@ footer {
   display: flex;
   justify-content: center;
 }
+
+.absolute-container {
+  position: absolute;
+}
+
+.frame {
+  position: relative;
+  height: 150px;
+  width: 300px;
+  overflow: hidden;
+}
+
+.zoomin img {
+  height: 150px;
+  width: 300px;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.zoomin img:hover {
+  position: absolute;
+  height: 200px;
+  width: 400px;
+}
+
+.group-header-frame {
+  height: 200px;
+  width: 800px;
+}
+
+.group-header-zoomin img {
+  position: absolute;
+  height: 200px;
+  width: 800px;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.group-header-zoomin img:hover {
+  position: absolute;
+  height: 205px;
+  width: 820px;
+}
+
 
 @keyframes slidy {
   0% { left: 0%; }
