@@ -12,7 +12,7 @@ var LandingPageHeader = React.createClass({
       return (
         <div className="header-content">
 
-          <h3 className="text-shadow header-text">Welcome to MuchAdoAboutMeeting!<br />
+          <h3 className="text-shadow header-text">Welcome to Much Ado About Meeting!<br />
             A website inspired by <a href="http://www.meetup.com">Meetup</a> for thespian robots and Shakespeare's plays.<br />
             <br />
             If thou wishest to enter without an account,</h3><br />
