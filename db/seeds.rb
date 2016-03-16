@@ -1039,7 +1039,7 @@ User.create([
     password: "letmein",
     location: "Rome",
     gender: "Female",
-    bio: "wife to Ceasar",
+    bio: "wife to Caesar",
     avatar_url: Faker::Avatar.image
   },
   {
@@ -1048,7 +1048,7 @@ User.create([
     password: "letmein",
     location: "Rome",
     gender: "Male",
-    bio: "a conspirator against Ceasar",
+    bio: "a conspirator against Caesar",
     avatar_url: Faker::Avatar.image
   },
   {
@@ -1628,7 +1628,7 @@ Group.create([
     organizer_id: 98
   },
   {
-    title: "Julius Ceasar's Citizens",
+    title: "Julius Caesar's Citizens",
     description: "Although the title is Julius Caesar, Caesar is not the most visible character in the group's events, appearing alive in only three event. Marcus Brutus speaks more than four times as many lines, and the central psychological drama of the play focuses on Brutus' struggle between the conflicting demands of honor, patriotism and friendship.",
     location: "Rome, The Roman Empire",
     banner_url: "http://res.cloudinary.com/deh4rnozs/image/upload/v1457296858/tumblr_nlaaseW0So1rwjpnyo1_1280_ttca5a.jpg",
