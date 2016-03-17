@@ -17,6 +17,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+
 .navbar, .btn-lg, .modal {
   font-family: Fondamento, cursive;
 }
@@ -65,13 +66,38 @@ header .header-text {
   font-family: Fondamento, cursive;
 }
 
+.imageContainer {
+    text-align: center;
+}
+
+.imageContainer img {
+    display: block;
+}
+
+.imageContainer div {
+    position: relative;
+    display: inline-block;
+    /* if you need ie6/7 support */
+    *display: inline;
+    zoom: 1;
+}
+
+.imageContainer span {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #000;
+    background: rgba(0,0,0,.5);
+}
+
 .event-hover:hover {
   background-image: none;
   background-color: #428bca;
   color: white;
 }
 
-.border-on-hover:hover {
+.back-on-hover:hover {
   background-color: #f9f9f9;
 }
 
@@ -82,6 +108,7 @@ header .header-text {
   font-family: 'Monsieur La Doulaise', cursive;
   font-size: 40px;
   color: white;
+  pointer-events: none;
 }
 
 .group-header-container {
@@ -162,9 +189,10 @@ footer {
 
 .info-box {
   position: relative;
-  left:0;
-  right:0;
-  bottom:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 .paper-box {
@@ -183,6 +211,14 @@ footer {
 
 .absolute-container {
   position: absolute;
+}
+
+.fixed-container {
+  position: fixed;
+}
+
+.relative-inner {
+  position: relative;
 }
 
 .frame {

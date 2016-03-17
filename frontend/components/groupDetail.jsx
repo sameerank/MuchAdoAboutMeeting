@@ -37,6 +37,32 @@ var GroupDetail = React.createClass({
       this.setState(this.getStateFromStore());
     },
 
+    _showEvents: function () {
+      if (this.state.group.events.length === 0) {
+        return (<p>This group hath no events.</p>);
+      } else {
+        return (<div className="row">
+          {this.state.group.events.map(function (event) {
+            return (<EventIndexItem key={event.id} event={event}
+              group={this.state.group} />);
+            }.bind(this))}
+        </div>);
+      }
+    },
+
+    _showUsers: function () {
+      if (this.state.group.users.length === 0) {
+        return (<p>This group hath no users.</p>);
+      } else {
+        return (<div className="row">
+          {this.state.group.users.map(function (user) {
+            return (<div key={user.id} className="col-sm-4"><UserIndexItem user={user}
+              group={this.state.group} /></div>);
+            }.bind(this))}
+        </div>);
+      }
+    },
+
     render: function () {
       if (this.state.group === undefined) { return <div></div>; }
       if (this.state.group.users === undefined) { return <div></div>; }
@@ -86,33 +112,32 @@ var GroupDetail = React.createClass({
               <div className="tab-content">
 
                 <div role="tabpanel" className="tab-pane active fade in" id="group-details">
-                  <div className="detail paper-box">
-                    <p><b>Group title:</b></p><p>{this.state.group.title}</p>
-                    <p><b>Group description:</b></p><p>{this.state.group.description}</p>
-                    <p><b>Group location:</b></p><p>{this.state.group.location}</p>
-                    <p><b>Group organizer:</b></p>
-                    <UserIndexItem
-                      user={this.state.group.organizer}
-                      group={this.state.group} />
+                  <div className="detail paper-box flex-center">
+                    <div className="row">
+                      <div className="col-md-6 well">
+                        <br /><br />
+                        <h2 className="text-center">{this.state.group.title}</h2>
+                        <br /><br />
+                        <p className="text-center">{this.state.group.description}</p>
+                        <br />
+                        <p className="text-center">located @ {this.state.group.location}</p>
+                      </div>
+                      <div className="col-md-6">
+                        <h3 className="text-center">This group hath been organized by</h3>
+                        <UserIndexItem
+                          user={this.state.group.organizer}
+                          group={this.state.group} />
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 <div role="tabpanel" className="tab-pane fade" id="events-in-group">
-                  <div className="row">
-                    {this.state.group.events.map(function (event) {
-                      return (<EventIndexItem key={event.id} event={event}
-                        group={this.state.group} />);
-                      }.bind(this))}
-                  </div>
+                  {this._showEvents()}
                 </div>
 
                 <div role="tabpanel" className="tab-pane fade" id="group-members">
-                  <div className="row">
-                    {this.state.group.users.map(function (user) {
-                      return (<UserIndexItem key={user.id} user={user}
-                        group={this.state.group} />);
-                      }.bind(this))}
-                  </div>
+                  {this._showUsers()}
                 </div>
               </div>
             </div>

@@ -41,7 +41,7 @@ var UserDetail = React.createClass({
   _allowEdit: function () {
     if (window.current_user === this.state.user.id) {
       return (
-        <div>
+        <div className="flex-center">
           <form>
             <a type="submit"
               className="btn btn-primary btn-lg"
@@ -54,6 +54,31 @@ var UserDetail = React.createClass({
           </form>
         </div>
       );
+    }
+  },
+
+  _showEvents: function () {
+    if (this.state.user.events.length === 0) {
+      return (<p>This user hath no events.</p>);
+    } else {
+      return (<div className="row">
+          {this.state.user.events.map(function (event) {
+            return (<EventIndexItem key={event.id} event={event}
+              group={event.group} />);
+            })}
+        </div>);
+    }
+  },
+
+  _showGroups: function () {
+    if (this.state.user.groups.length === 0) {
+      return (<p>This user hath no groups.</p>);
+    } else {
+      return (<div className="row">
+        {this.state.user.groups.map(function (group) {
+          return (<GroupIndexItem key={group.id} group={group} />);
+        })}
+      </div>);
     }
   },
 
@@ -71,34 +96,38 @@ var UserDetail = React.createClass({
 
           <div className="tab-content">
 
-            <div role="tabpanel" className="tab-pane active fade in" id="profile">
-              <div className="detail paper-box">
-                {this._allowEdit()}
-                <img src={this.state.user.avatar_url} />
-                <p><b>Name:</b></p><p>{this.state.user.name}</p>
-                <p><b>Location:</b></p><p>{this.state.user.location}</p>
-                <p><b>Gender:</b></p><p>{this.state.user.gender}</p>
-                <p><b>Bio:</b></p><p>{this.state.user.bio}</p>
+            <div role="tabpanel" className="tab-pane active fade in flex-center" id="profile">
+              <br />
+              {this._allowEdit()}
+              <br />
+            <div className="detail paper-box flex-center">
+                <div className="row">
+                  <div className="col-md-6 well text-center">
+                    <br /><br />
+                    <h2>{this.state.user.name}</h2>
+                    <br /><br />
+                    <p>{this.state.user.bio}</p>
+                    <br />
+                    <p>located @ {this.state.user.location}</p>
+                    <br />
+                    <p>{this.state.user.gender}</p>
+                  </div>
+                  <div className="col-md-6 text-center">
+                    <br />
+                    <img src={this.state.user.avatar_url} />
+                  </div>
                 </div>
+              </div>
             </div>
 
             <div role="tabpanel" className="tab-pane fade" id="events-attending">
               <br />
-              <div className="row">
-                {this.state.user.events.map(function (event) {
-                  return (<EventIndexItem key={event.id} event={event}
-                    group={event.group} />);
-                  })}
-              </div>
+              {this._showEvents()}
             </div>
 
             <div role="tabpanel" className="tab-pane fade" id="groups-membership">
               <br />
-              <div className="row">
-                {this.state.user.groups.map(function (group) {
-                  return (<GroupIndexItem key={group.id} group={group} />);
-                })}
-              </div>
+              {this._showGroups()}
             </div>
 
           </div>

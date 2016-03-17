@@ -10,9 +10,9 @@ var UserIndexItem = React.createClass({
 
   render: function () {
     return (
-      <div onClick={this.showDetail} className="col-sm-4">
-        <div className="clickable text-center border-on-hover">
-          <p><img src={this.props.user.avatar_url} alt={this.props.user.name} /></p>
+      <div onClick={this.showDetail} className="imageContainer">
+        <div className="clickable text-center back-on-hover">
+          <img src={this.props.user.avatar_url} alt={this.props.user.name} />
           <p>{this.props.user.name}</p>
         </div>
       </div>

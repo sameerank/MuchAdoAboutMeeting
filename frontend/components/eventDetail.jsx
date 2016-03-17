@@ -33,6 +33,20 @@ var EventDetail = React.createClass({
     this.setState(this.getStateFromStore());
   },
 
+  _showUsers: function () {
+    if (this.state.event.users.length === 0) {
+      return (<p>This event hath no users.</p>);
+    } else {
+      return (<div className="row">
+        {this.state.event.users.map(function (user) {
+          return (<div key={user.id} className="col-sm-4 imageContainer">
+          <UserIndexItem user={user} />
+        </div>);
+        })}
+      </div>);
+    }
+  },
+
   render: function () {
     if (this.state.event === undefined) { return <div></div>; }
     if (this.state.event.users === undefined) { return <div></div>; }
@@ -54,23 +68,31 @@ var EventDetail = React.createClass({
             <div className="tab-content">
 
               <div role="tabpanel" className="tab-pane active fade in" id="event-details">
-                <div className="detail paper-box">
-                  <p><b>Event title:</b></p><p>{this.state.event.title}</p>
-                  <p><b>Event description:</b></p><p>{this.state.event.description}</p>
-                  <p><b>Event location:</b></p><p>{this.state.event.location}</p>
-                  <p><b>Start time:</b></p><p>{this.state.event.start_time}</p>
-                  <p><b>End time:</b></p><p>{this.state.event.end_time}</p>
-                  <p><b>Event host:</b></p>
-                  <UserIndexItem
-                    user={this.state.event.host}
-                    group={this.state.event.group} />
+                <div className="detail paper-box flex-center">
+                  <div className="row">
+                    <div className="col-md-6 well text-center">
+                      <br /><br />
+                      <h2>{this.state.event.title}</h2>
+                      <br /><br />
+                      <h4>{this.state.event.description}</h4>
+                      <br />
+                      <p>located @ {this.state.event.location}</p>
+                      <br />
+                      <p>from {this.state.event.start_time}</p>
+                      <p>to {this.state.event.end_time}</p>
+                    </div>
+                    <div className="col-md-6 text-center">
+                      <h3>This event is hosted by</h3>
+                      <UserIndexItem
+                        user={this.state.event.host}
+                        group={this.state.event.group} />
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <div role="tabpanel" className="tab-pane fade" id="users_attending_event">
-                {this.state.event.users.map(function (user) {
-                  return (<UserIndexItem key={user.id} user={user} />);
-                })}
+                {this._showUsers()}
               </div>
 
             </div>
