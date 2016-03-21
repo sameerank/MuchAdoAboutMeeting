@@ -6,12 +6,12 @@ View it live at [http://muchadoaboutmeeting.xyz](http://muchadoaboutmeeting.xyz)
 
 ## Main functionality
 
-- * Create an account/ Log in / Log out
+- Create an account/ Log in / Log out
     * Session authentication occurs on the backend
-- * Edit own profile and see group memberships and events that you are attending
-- * Browse, join, leave, or create groups
-- * Browse, join, leave, or create events within groups
-- * View the profiles of other members and see their group memberships
+- Edit own profile and see group memberships and events that you are attending
+- Browse, join, leave, or create groups
+- Browse, join, leave, or create events within groups
+- View the profiles of other members and see their group memberships
 
 
 ## Design Docs

@@ -6,23 +6,29 @@
 ## New Session
 ![new-session]
 
-## EventsIndex
-![event-index]
+## Nav Bar
+![nav_bar]
 
-## EventIndexItem
-![events-index-item]
+## New Event
+![new_event]
 
-## EventForm
-![event-form]
+## New Group
+![new_group]
 
-## GroupsIndex / GroupIndexItem
-![groups]
+## Show Event
+![show_event]
 
-## GroupForm
-![group-form]
+## Show Group
+![show_group]
+
+## Show User
+![show_user]
 
 [new-user]: ./wireframes/new_user.png
 [new-session]: ./wireframes/new_session.png
-[events]: ./wireframes/root_notes.png
-[groups]: ./wireframes/root_notebooks.png
-[group-form]: ./wireframes/notebook_form.png
+[nav_bar]: ./wireframes/nav_bar.png
+[new_event]: ./wireframes/new_event.png
+[new_group]: ./wireframes/new_group.png
+[show_event]: ./wireframes/show_event.png
+[show_group]: ./wireframes/show_group.png
+[show_user]: ./wireframes/show_user.png
